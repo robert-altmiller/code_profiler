@@ -213,23 +213,3 @@ dbutils.widgets.text("tenant_id", tenant_id, "Tenant ID")
 # MAGIC WHERE tenant_id = '5d856b7a_ab5d_4338_9401_0394dd1da677' and thread_id = '140070325519936'--'140069922911808'--'140070333912640'
 # MAGIC GROUP BY tenant_id, thread_id, function_name
 # MAGIC -- ORDER BY table_name ASC
-
-# COMMAND ----------
-
-# df = spark.sql("SELECT * FROM hive_metastore.default.code_profiler_data_workflow")
-df = spark.sql("SELECT ingestion_date, tenant_id, thread_id, function_name, execution_time, memory_usage_bytes, cpu_usage_percent FROM hive_metastore.default.code_profiler_data_workflow")
-display(df)
-
-# COMMAND ----------
-
-# DBTITLE 1,How Many Times is Each Function Called for a Single Tenant
-
-
-# COMMAND ----------
-
-# DBTITLE 1,Read an Entity From HDLFS into Dataframe
-hdlfs_entity = "wf_emp_personalinfoesp"
-hdlfs_path = f"hdlfs://68d15059-6ca8-4eb6-8af7-1799fab03cf4.files.hdl.canary-eu21.hanacloud.ondemand.com/silver/datasource/table/delta/workforceperson/external/v0/{hdlfs_entity}"
-hdfs_spark = HDFSUtil.get_hdfs_spark_session()
-hdlfs_table_df = hdfs_spark.read.load(hdlfs_path)
-print(f"silver entity '{hdlfs_entity}' row count: {hdlfs_table_df}")
