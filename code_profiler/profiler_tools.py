@@ -177,7 +177,6 @@ def dynamic_import_and_set_global(class_path: str):
     module_path, class_name = class_path.rsplit('.', 1)
     module = importlib.import_module(module_path)
     imported_class = getattr(module, class_name)
-    # globals()[class_name] = imported_class  # Set the class in the global namespace
     return str(imported_class)
 
 
