@@ -1,5 +1,5 @@
 # library imports
-import glob, importlib, inspect, json, os, psutil, re, sys, threading, time, types
+import glob, importlib, inspect, json, os, psutil, queue, re, sys, threading, time, types
 from datetime import datetime
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
@@ -16,19 +16,23 @@ spark_local = SparkSession.builder \
     .getOrCreate()
 
 # local parameters
-log_lock = threading.Lock()
 thread_local = threading.local()
-thread_local.depth = 0  # Initialize a depth counter
 pid = os.getpid()
 process = psutil.Process(pid)
 original_recursion_limit = sys.getrecursionlimit()
+global_thread_queue_dict = {}
+
+# define the message queue batch size when writing code profiling data logs
+mqueue_batch_size = 500
+print(f"message queue batch size: {mqueue_batch_size}")
 
 # explicity print the recursion limit
-print_recursion_limit = True
-print(f"\nexplicity track and print the recursion limit at the thread level: {print_recursion_limit}\n")
+print_recursion_limit = False
+print(f"\nprint_recursion_limit: {print_recursion_limit}\n")
 
 # functions to ignore
 functions_to_ignore = [
+    # --- DO NOT MODIFY THESE FUNCTIONS TO IGNORE ---
     # notebook class function helpers
     "get_classes_from_globals", "apply_timer_decorator_to_nb_class_function", "apply_timer_decorator_to_all_nb_class_functions",
     # Python file class function helpers
@@ -37,17 +41,18 @@ functions_to_ignore = [
     # all standalone Python functions helpers
     "is_library_defined_function", "apply_timer_decorator_to_all_python_functions",
     # create delta table function helpers
-    "get_profiling_result_paths", "get_all_profiling_results_joined", "write_profiling_results_to_delta_table",
-    "create_code_profiling_results_delta_table",
+    "get_profiling_result_paths", "get_all_profiling_results_joined", "write_profiling_results_to_delta_table", 
+    "create_code_profiling_results_delta_table", "add_timer_to_all_functions",
+    "write_all_code_profiling_logs_and_create_delta_table",
     # timer decorator and write to log function
-    "timer",  "wrapper", "write_to_log", "safe_str", "wraps",
+    "timer",  "wrapper", "write_to_log", "safe_str", "wraps", "process_global_thread_queue_dict", "iterate_queue", 
     # standard functions
     "open", "getpid", "system", "type", "exit", "displayHTML", "udf", "builtins", "os", "psutil", "sys", "__builtin__"
 ]
 print(f"functions_to_ignore: {functions_to_ignore}\n")
 
 # log file write path variable
-log_file_write_path = f"/Workspace/Users/robert.altmiller@sap.com/ayt-data-engineering-local-run/profiling/{datetime.now().date()}"
+log_file_write_path = f"/Workspace/Users/robert.altmiller@databricks.com/code_profiling/local_run/{datetime.now().date()}"
 print(f"log_file_write_path: {log_file_write_path}\n")
 
 # unit testing python class and functions scope
@@ -55,5 +60,5 @@ python_class_and_fxns_scopes_unittesting = ["Inventory", "is_prime", "celsius_to
 print(f"python_class_and_fxns_scopes_unittesting: {python_class_and_fxns_scopes_unittesting}\n")
 
 # python class scopes for python application to run code profiler on
-python_class_scopes = ["aytframework", "notebooks", "__main__"] # IMPORTANT: the __main__ one is mandatory
+python_class_scopes = ["aytframework", "notebooks", "__main__"] # IMPORTANT: the 'notebooks' and '__main__' are mandatory
 print(f"python_class_scopes: {python_class_scopes}\n")

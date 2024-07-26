@@ -1,88 +1,110 @@
 from code_profiler.env_vars import *
 
-def write_to_log(thread_id, message, log_file_path = log_file_write_path):
-    """
-    write a message to a log file in Databricks DBFS.
-    
-    Args:
-    message (str): The message to write to the log file.
-    log_file_path (str): The path to the log file in DBFS (default: '/dbfs/FileStore/logs/my_log.txt').
-    """
-    
-    # Get the current timestamp
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
-    # Format the log message with the timestamp
-    log_message = f"{json.dumps(message)},\n"
-    
-    # Append the log message to the log file
-    if not os.path.exists(log_file_path):
-        try:
-            os.makedirs(log_file_path)
-        except FileExistsError:
-            print(f"The directory {log_file_path} already exists.")
-        except Exception as e:
-            print(f"An error occurred while creating {log_file_path}: {e}")
-    with log_lock:
-        with open(f"{log_file_path}/{thread_id}_log.txt", 'a') as log_file:
-            log_file.write(log_message)
+def iterate_queue(q):
+    """helper function to iterate over the queue"""
+    while not q.empty():
+        item = q.get()
+        q.task_done()
+        yield item
 
 
-def timer(func):
+def write_to_log(queue, thread_id, batch_size, log_file_path):
+    """write a message to a log file in Databricks DBFS."""
+    # Ensure the directory exists
+    os.makedirs(log_file_path, exist_ok=True)
+    log_file_thread_path = f"{log_file_path}/{thread_id}_log.txt"
+
+    queue_batch = []
+    for message in iterate_queue(queue):
+        queue_batch.append(f"{json.dumps(message)},\n")
+        if len(queue_batch) >= batch_size:
+            with open(log_file_thread_path, 'a') as log_file:
+                log_file.writelines(queue_batch)
+            queue_batch.clear()
+
+    # write remaining messages if any
+    if queue_batch:
+        with open(log_file_thread_path, 'a') as log_file:
+            log_file.writelines(queue_batch)
+
+
+def process_global_thread_queue_dict(global_log_dict, batch_size, log_file_path = log_file_write_path):
+    """process and log all code profiling messages for all threads in the global_thread_queue dictionary"""
+    threads = []
+    for thread_id, queue in global_log_dict.items():
+        thread = threading.Thread(target=write_to_log, args=(queue, thread_id, batch_size, log_file_path))
+        threads.append(thread)
+        thread.start()
+
+    # wait for all threads to complete (multithreading)
+    for thread in threads:
+        thread.join()
+
+
+def timer(log_file_path):
     """decorator that measures the execution time of a function and logs it, without altering return values."""
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        sys.setrecursionlimit(sys.getrecursionlimit() + 1)
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            sys.setrecursionlimit(sys.getrecursionlimit() + 1)
 
-        if not hasattr(thread_local, 'depth'):
-            thread_local.depth = 0
+            if not hasattr(thread_local, 'depth'):
+                thread_local.depth = 0
+            thread_local.depth += 1
 
-        thread_local.depth += 1
-
-        try:
+            if not hasattr(thread_local, 'log_queue'):
+                thread_local.log_queue = queue.Queue()
+            
             thread_id = threading.get_ident()  # Get the current thread identifier
-            if print_recursion_limit == True:
-                print(f"function_name: {func.__name__}()")
-                print(f"thread id: {thread_id} recursion limit: {sys.getrecursionlimit()}\n")
-            start_time = time.time()  # Start time
-            start_mem = process.memory_info().rss  # Memory usage at the start
-            start_cpu = process.cpu_percent(interval=None)  # CPU usage at the start
+            if thread_id not in global_thread_queue_dict.keys():
+                global_thread_queue_dict[thread_id] = queue.Queue()
 
-            result = func(*args, **kwargs)  # Execute the function and store the result
+            try:
+                if print_recursion_limit == True:
+                    print(f"function_name: {func.__name__}()")
+                    print(f"thread id: {thread_id} recursion limit: {sys.getrecursionlimit()}\n")
+                start_time = time.time()  # Start time
+                start_mem = process.memory_info().rss  # Memory usage at the start
+                start_cpu = process.cpu_percent(interval=1)  # CPU usage at the start
 
-            end_time = time.time()  # End time
-            end_mem = process.memory_info().rss  # Memory usage at the end
-            end_cpu = process.cpu_percent(interval=None)  # CPU usage at the end
-            execution_time = end_time - start_time  # Calculate the time taken
-            # Get the current timestamp
-            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                
-            args_details = ',XSEPX,'.join([str(arg) for arg in args]) # create a detailed string of all positional arguments  
-            kwargs_details = ',XSEPX,'.join([f"{k}={v}" for k, v in kwargs.items()])  # create a detailed string of all keyword arguments
+                result = func(*args, **kwargs)  # Execute the function and store the result
 
-            log_message_dict = {
-                "ingestion_date": timestamp,
-                "thread_id": thread_id,
-                "process_id": pid,
-                "tenant_id": str(unique_app_id),
-                "function_name": f"{func.__name__}()",
-                "execution_time": f"{execution_time:.6f}",
-                "start_time": str(datetime.fromtimestamp(start_time)),
-                "end_time": str(datetime.fromtimestamp(end_time)),
-                "memory_usage_bytes": end_mem - start_mem,
-                "cpu_usage_percent": end_cpu - start_cpu,
-                "arguments": args_details,
-                "kwargs": kwargs_details,
-                "return_value": str(result)
-            }
-            write_to_log(thread_id, log_message_dict)
-            return result  # Return the original result
-        finally:
-            thread_local.depth -= 1
-            # Restore the original recursion limit
-            if thread_local.depth == 0:
-                sys.setrecursionlimit(original_recursion_limit)
-    return wrapper
+                end_time = time.time()  # End time
+                end_mem = process.memory_info().rss  # Memory usage at the end
+                end_cpu = process.cpu_percent(interval=1)  # CPU usage at the end
+                execution_time = end_time - start_time  # Calculate the time taken
+                # Get the current timestamp
+                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                    
+                args_details = ',XSEPX,'.join([str(arg) for arg in args]) # create a detailed string of all positional arguments  
+                kwargs_details = ',XSEPX,'.join([f"{k}={v}" for k, v in kwargs.items()])  # create a detailed string of all keyword arguments
+
+                log_message_dict = {
+                    "ingestion_date": timestamp,
+                    "thread_id": thread_id,
+                    "process_id": pid,
+                    "unique_app_id": str(unique_app_id),
+                    "function_name": f"{func.__name__}()",
+                    "execution_time": f"{execution_time:.6f}",
+                    "start_time": str(datetime.fromtimestamp(start_time)),
+                    "end_time": str(datetime.fromtimestamp(end_time)),
+                    "memory_usage_bytes": end_mem - start_mem,
+                    "cpu_usage_percent": end_cpu - start_cpu,
+                    "arguments": args_details,
+                    "kwargs": kwargs_details,
+                    "return_value": str(result)
+                }
+                return result  # Return the original result
+
+            finally:
+                thread_local.depth -= 1
+                # Restore the original recursion limit
+                if thread_local.depth == 0:
+                    sys.setrecursionlimit(original_recursion_limit)
+                # Check queue size, and write logs in batches of mqueue_batch_size
+                global_thread_queue_dict[thread_id].put(log_message_dict)
+        return wrapper
+    return decorator
 
 
 ##--------------------------------------------------------------------------------------------------------------------------------------
@@ -102,7 +124,7 @@ def get_classes_from_globals(globals):
     return list(set(imported_classes))
 
 
-def apply_timer_decorator_to_nb_class_function(globals, nb_class_name, python_class_scopes):
+def apply_timer_decorator_to_nb_class_function(globals, nb_class_name, python_class_scopes, log_file_path):
     """apply the code profiler timer() decorator to individual Databricks notebook (nb) class"""
 
     module = globals.get(nb_class_name)
@@ -119,7 +141,7 @@ def apply_timer_decorator_to_nb_class_function(globals, nb_class_name, python_cl
                       f"{nb_class_name}.{attr_name}" not in python_class_scopes:
             print(f"nb_class_function attr_name: {attr_name}")
             print(f"nb_class_function attr_value: {attr_value}\n")
-            decorated_function = timer(attr_value)
+            decorated_function = timer(log_file_path)(attr_value)
             # set the decorated function on the module
             setattr(module, attr_name, decorated_function)
             # update the same in the globals() if it's tracked there
@@ -129,7 +151,7 @@ def apply_timer_decorator_to_nb_class_function(globals, nb_class_name, python_cl
 
 
 
-def apply_timer_decorator_to_all_nb_class_functions(globals, class_scopes = python_class_and_fxns_scopes_unittesting, python_class_scopes = []):
+def apply_timer_decorator_to_all_nb_class_functions(globals, class_scopes = python_class_and_fxns_scopes_unittesting, python_class_scopes = [], log_file_path = log_file_write_path):
     """apply the code profiler timer() decorator to all Databricks notebook (nb) classes"""
     cls_functions_list = []
     nb_classes = get_classes_from_globals(globals)
@@ -139,7 +161,7 @@ def apply_timer_decorator_to_all_nb_class_functions(globals, class_scopes = pyth
         if check_items_in_string(class_scopes, nb_class_path) == True: # check if class object is in class_scopes
             print("------------------------------------------------------------------------\n")
             print(f"nb_class_name: {nb_class_name}\nnb_class_path: {nb_class_path}\n")
-            globals, results = apply_timer_decorator_to_nb_class_function(globals, nb_class_name, python_class_scopes)
+            globals, results = apply_timer_decorator_to_nb_class_function(globals, nb_class_name, python_class_scopes, log_file_path)
             # combine class and function names
             cls_functions_list += [f"{nb_class_name}.{result['attr_name']}" for result in results]
     return globals, cls_functions_list
@@ -177,10 +199,11 @@ def dynamic_import_and_set_global(class_path: str):
     module_path, class_name = class_path.rsplit('.', 1)
     module = importlib.import_module(module_path)
     imported_class = getattr(module, class_name)
+    # globals()[class_name] = imported_class  # Set the class in the global namespace
     return str(imported_class)
 
 
-def apply_timer_decorator_to_python_class_function(globals, python_class_name, nb_class_results):
+def apply_timer_decorator_to_python_class_function(globals, python_class_name, nb_class_results, log_file_path):
     """apply the code profiler timer() decorator to individual Python class functions"""
     cls =  globals.get(python_class_name)
     results = []
@@ -196,7 +219,7 @@ def apply_timer_decorator_to_python_class_function(globals, python_class_name, n
                       f"{python_class_name}.{attr_name}" not in nb_class_results:
             print(f"python_class_function attr_name: {attr_name}")
             print(f"python_class_function attr_value: {attr_value}\n")
-            decorated_function = timer(attr_value)
+            decorated_function = timer(log_file_path)(attr_value)
             # set the decorated function on the module
             setattr(cls, attr_name, decorated_function)
             # update the same in the globals() if it's tracked there
@@ -205,7 +228,7 @@ def apply_timer_decorator_to_python_class_function(globals, python_class_name, n
     return globals, results
 
 
-def apply_timer_decorator_to_all_python_class_functions(globals, class_scopes = python_class_and_fxns_scopes_unittesting, nb_class_results = []):
+def apply_timer_decorator_to_all_python_class_functions(globals, class_scopes = python_class_and_fxns_scopes_unittesting, nb_class_results = [], log_file_path = log_file_write_path):
     """
     apply the code profiler timer() decorator to all Python class functions
     nb = notebook
@@ -224,7 +247,7 @@ def apply_timer_decorator_to_all_python_class_functions(globals, class_scopes = 
             python_class_name = python_imported_class.split('.')[-1].strip("'>") # get the class name
             print("------------------------------------------------------------------------")
             print(f"python_class_name: {python_class_name}\npython_class_path: {python_imported_class}\n")
-            globals, results = apply_timer_decorator_to_python_class_function(globals, python_class_name, nb_class_results)
+            globals, results = apply_timer_decorator_to_python_class_function(globals, python_class_name, nb_class_results, log_file_path)
             # combine class and function names
             cls_functions_list += [f"{python_class_name}.{result['attr_name']}" for result in results]
     return globals, cls_functions_list
@@ -249,7 +272,7 @@ def is_library_defined_function(func):
     return False
 
 
-def apply_timer_decorator_to_all_python_functions(globals):
+def apply_timer_decorator_to_all_python_functions(globals, log_file_path = log_file_write_path):
     """apply the code profiler timer() decorator to all functions in the current global namespace."""
     functions = []
     decorated_functions = {}
@@ -258,7 +281,7 @@ def apply_timer_decorator_to_all_python_functions(globals):
         # print(f"name: {name} and object: {obj}\n")
         if inspect.isfunction(obj) and is_library_defined_function(obj) == False and name not in functions_to_ignore:
             # Apply the timer decorator to each function
-            decorated_function = timer(obj)
+            decorated_function = timer(log_file_path)(obj)
             globals[name] = decorated_function  # Update the global namespace
             functions_list.append(name)
             print(f"Found object: {obj}")

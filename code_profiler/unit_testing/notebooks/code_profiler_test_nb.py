@@ -1,6 +1,11 @@
 # Databricks notebook source
+# DBTITLE 1,Delete Existing Widgets
+dbutils.widgets.removeAll()
+
+# COMMAND ----------
+
 # DBTITLE 1,Import the Python Code Profiler
-from code_profiler.profiler_tools import *
+from code_profiler.main import *
 
 # COMMAND ----------
 
@@ -14,15 +19,20 @@ from code_profiler.profiler_tools import *
 
 # COMMAND ----------
 
+log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/ayt-data-engineering-local-run/profiling/code_profiler_unit_test_nb"
+print(log_file_write_path)
+
+# COMMAND ----------
+
 # DBTITLE 1,Apply Timer() Decorator to All Standalone Python Functions
 # Example usage: Call these functions after all imports
-globals, function_results = apply_timer_decorator_to_all_python_functions(globals()) # python standalone functions 
+globals, function_results = apply_timer_decorator_to_all_python_functions(globals(), log_file_path = log_file_write_path) # python standalone functions 
 
 # COMMAND ----------
 
 # DBTITLE 1,Add Timer Decorator to All Notebook Class Functions
 # Example usage: Call these functions after all imports
-globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(globals, python_class_scopes) # notebook class functions
+globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(globals, python_class_scopes, log_file_path = log_file_write_path) # notebook class functions
 
 # COMMAND ----------
 
@@ -50,11 +60,14 @@ print("Max in list [1, 99, 34, 56]:", max_in_list([1, 99, 34, 56]))
 
 # COMMAND ----------
 
-# DBTITLE 1,Write Code Profiling Results to Delta Table
-create_code_profiling_results_delta_table(
+# DBTITLE 1,Create Code Profiling Logs and Write Code Profiling Results to Delta Table
+write_all_code_profiling_logs_and_create_delta_table(
     spark = spark,
-    catalog = "hive_metastore", 
-    schema = "default", 
+    global_thread_queue_dict = global_thread_queue_dict,
+    mqueue_batch_size = mqueue_batch_size, 
+    catalog = "hive_metastore",
+    schema = "default",
     table_name = "code_profiler_unit_test_nb",
-    overwrite_profiling_data = True
+    overwrite_profiling_data = True,
+    log_file_path = log_file_write_path
 )
