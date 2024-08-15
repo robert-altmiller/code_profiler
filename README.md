@@ -16,7 +16,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 - __Memory Profiler__ is used to profile the memory usage of your code, and it provides line-by-line memory consumption analysis.
 
-  ![scalene_results.png](/code_profiler/readme_images/scalene_results.png)
+  ![memory_profiler_results.png](/code_profiler/readme_images/memory_profiler_results.png)
 
 - __Py-Spy__ is a sampling profiler for Python programs, and it runs with minimal overhead and is useful for profiling long-running Python processes.
 
