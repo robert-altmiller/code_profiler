@@ -1,3 +1,6 @@
+# prerequisites: # need to 'pip install memory_profiler'
+# execution: 'python3 run_memory_profiler.py'
+
 # library imports
 from pyspark.sql import SparkSession
 from memory_profiler import profile

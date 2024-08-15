@@ -1,3 +1,5 @@
+# execution: 'python3 run_cprofile.py'
+
 # library imports
 from pyspark.sql import SparkSession
 import cProfile, io, pstats

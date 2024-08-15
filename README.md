@@ -18,13 +18,9 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ![memory_profiler_results.png](/code_profiler/readme_images/memory_profiler_results.png)
 
-- __Py-Spy__ is a sampling profiler for Python programs, and it runs with minimal overhead and is useful for profiling long-running Python processes.
+- __Yappi__ is a multithreaded function level profiler that can profile both CPU and wall-clock time, and it works well with multi-threaded applications.
 
-  ![scalene_results.png](/code_profiler/readme_images/scalene_results.png)
-
-- __Yappi__ is a multithreaded profiler that can profile both CPU and wall-clock time, and it is a versatile profiler that can work well with multi-threaded applications.
-
-  ![scalene_results.png](/code_profiler/readme_images/scalene_results.png)
+  ![yappi_results.png](/code_profiler/readme_images/yappi_results.png)
 
 ## What are some issue with line-by-line profilers?
 

@@ -1,3 +1,6 @@
+# prerequisites: # need to 'pip install scalene'
+# execution: 'python3 run_scalene.py'
+
 # library imports
 import json, subprocess
 
@@ -23,13 +26,13 @@ def run_scalene_profiling(method = 'json', script_path = None, scalene_output_pa
     else:
         print("No output from Scalene or error occurred:", output.stderr)
 
-# Run scalene profiling as json
+# run scalene profiling as json
 run_scalene_profiling(
     method = "json",
     script_path = "code_example.py"
 )
 
-# Run scalene profiling as html
+# run scalene profiling as html
 run_scalene_profiling(
     method = "html",
     script_path = "code_example.py"
