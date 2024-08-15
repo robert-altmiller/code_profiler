@@ -6,7 +6,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ![other_profilers.png](/code_profiler/readme_images/other_profilers.png)
 
-- __cProfile__ is a deterministic profiler provided by Python's standard library, and it is implemented in C which makes it relatively efficient compared to pure Python profilers. __cProfile__ records every function call and the time it takes, providing a comprehensive view of where your program spends its time.
+- __cProfile__ is a deterministic profiler provided by Python's standard library, and it is implemented in C which makes it relatively efficient compared to pure Python profilers. __cProfile__ records every function call and the time it takes, providing a comprehensive view of where your program spends its time.  It also does granular line-by-line code profiling.
 
   ![c_profiler_results.png](/code_profiler/readme_images/c_profiler_results.png)
 
