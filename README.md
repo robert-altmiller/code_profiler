@@ -1,4 +1,4 @@
-# Single or Multi-Threaded Code Profiler
+# Single or Multi-Threaded Python Code Profiler
 
 ## Single or Multi-threaded Code Profiling Using Python Timer() Class Function Decorators and Globals() Namespace<br><br>
 
