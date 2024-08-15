@@ -8,7 +8,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 - __cProfile__ is a deterministic profiler provided by Python's standard library, and it is implemented in C which makes it relatively efficient compared to pure Python profilers. __cProfile__ records every function call and the time it takes, providing a comprehensive view of where your program spends its time.
 
-  ![cprofiler_results.png](/code_profiler/readme_images/cprofiler_result.png)
+  ![cprofiler_results.png](/code_profiler/readme_images/cprofiler_results.png)
 
 - __Scalene__ is a high-performance CPU, memory, and GPU profiler for Python. It’s designed to be fast and accurate, with low overhead, and provides detailed insights into the performance characteristics of Python programs.  It also does granular line-by-line code profiling.
 
