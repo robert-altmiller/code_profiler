@@ -26,7 +26,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ![scalene_results.png](/code_profiler/readme_images/scalene_results.png)
 
-## What are some issue with line by line profilers?
+## What are some issue with line-by-line profilers?
 
   - Profiling every line can generate a large amount of data, much of which might be irrelevant to the actual performance bottlenecks.
   -  Line-by-line profiling introduces significant overhead because the profiler needs to track the execution time and memory usage of each individual line of code. This can slow down the execution of the program, and make the profiling data less representative of real-world performance.
