@@ -40,6 +40,10 @@ def process_global_thread_queue_dict(global_log_dict, batch_size, log_file_path 
     for thread in threads:
         thread.join()
 
+##--------------------------------------------------------------------------------------------------------------------------------------
+
+
+##---------------------------------------------- Code Profling timer() Decorator Function ----------------------------------------------
 
 def timer(log_file_path):
     """decorator that measures the execution time of a function and logs it, without altering return values."""
