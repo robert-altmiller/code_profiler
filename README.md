@@ -38,7 +38,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
   - __Apply Timer Function to all Databricks Notebook Classes__
   - __Apply Timer Code Profiling Function to all Python File Classes__
   - __Apply Timer Code Profiling Function to all Standalone Functions__
-  - __Create Delta Table From Code Profiling Log Files__.
+  - __Create Delta Table From Code Profiling Log Files__
 
 ## How is all the code profiling data captured after the profiler finishes?
 
