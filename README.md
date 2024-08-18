@@ -53,7 +53,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
   global_thread_queue_dict[thread_id].put(log_message_dict) 
   ```
 
-- At the end of the code profiler execution all the captured profiling data by thread_id in the 'global_thread_queue_dict' global dictionary is written out to the Databricks File System (DFBS) in a log file named __'{thread_id}_log.txt'__ for each thread.  Multithreading is used to process each thread_id queue in the 'global_thread_queue_dict' dictionary in parallel and create all the log files at once.
+- At the end of the code profiler execution all the captured profiling data by thread_id in the 'global_thread_queue_dict' global dictionary is written out to the Databricks File System (DFBS) in a log file named '__{thread_id}_log.txt__' for each thread.  Multithreading is used to process each thread_id queue in the 'global_thread_queue_dict' dictionary in parallel and create all the log files at once.
 
   ```python
   def write_to_log(queue, thread_id, batch_size, log_file_path):
