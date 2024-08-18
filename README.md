@@ -31,4 +31,4 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ## How is this code profiler different from other code profilers?
 
-- The timer() code profiling decorator for standalone Python functions, Databricks class functions, and Python file class functions can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.
+- The timer() code profiling Python decorator for standalone Python functions, Databricks class functions, and Python file class functions can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.
