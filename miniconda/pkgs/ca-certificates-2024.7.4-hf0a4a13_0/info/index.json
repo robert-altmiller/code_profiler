@@ -1,0 +1,12 @@
+{
+  "arch": "arm64",
+  "build": "hf0a4a13_0",
+  "build_number": 0,
+  "depends": [],
+  "license": "ISC",
+  "name": "ca-certificates",
+  "platform": "osx",
+  "subdir": "osx-arm64",
+  "timestamp": 1720077468981,
+  "version": "2024.7.4"
+}

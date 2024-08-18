@@ -1,0 +1,68 @@
+# This file created by conda-build 3.23.3
+# meta.yaml template originally from:
+# /Users/runner/work/1/s/recipe, last modified Thu Mar 23 00:41:26 2023
+# ------------------------------------------------
+
+package:
+  name: readline
+  version: '8.2'
+source:
+  sha256: 3feb7171f16a84ee82ca18a36d7b9be109a52c04f492a053331d7d1095007c35
+  url: https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
+build:
+  number: '1'
+  run_exports:
+    - readline >=8.2,<9.0a0
+  string: h92ec313_1
+requirements:
+  build:
+    - ca-certificates 2022.12.7 h033912b_0
+    - cctools_osx-64 973.0.1 hcc6d90d_13
+    - cctools_osx-arm64 973.0.1 hfd1dfa6_13
+    - clang 14.0.6 h694c41f_0
+    - clang-14 14.0.6 default_h55ffa42_0
+    - clang_osx-arm64 14.0.6 he41d1a2_5
+    - clangxx 14.0.6 default_h55ffa42_0
+    - compiler-rt 14.0.6 h613da45_0
+    - compiler-rt_osx-64 14.0.6 hab78ec2_0
+    - ld64_osx-64 609 hfd63004_13
+    - ld64_osx-arm64 609 h566df06_13
+    - libclang-cpp14 14.0.6 default_h55ffa42_0
+    - libcxx 15.0.7 h71dddab_0
+    - libiconv 1.17 hac89ed1_0
+    - libllvm14 14.0.6 h5b596cc_1
+    - libtool 2.4.7 hf0c8a7f_0
+    - libzlib 1.2.13 hfd90126_4
+    - llvm-tools 14.0.6 h5b596cc_1
+    - make 4.3 h22f3db7_1
+    - openssl 3.1.0 hfd90126_0
+    - pkg-config 0.29.2 ha3d46e9_1008
+    - sigtool 0.1.3 h88f4db0_0
+    - tapi 1100.0.11 h9ce4665_0
+  host:
+    - ncurses 6.3 h07bb92c_1
+  run:
+    - ncurses >=6.3,<7.0a0
+test:
+  commands:
+    - test ! -f ${PREFIX}/lib/libreadline.a
+    - test -f ${PREFIX}/lib/libreadline${SHLIB_EXT}
+    - test ! -f ${PREFIX}/lib/libhistory.a
+    - test -f ${PREFIX}/lib/libhistory${SHLIB_EXT}
+about:
+  home: https://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
+  license: GPL-3.0-only
+  license_file: COPYING
+  summary: library for editing command lines as they are typed in
+extra:
+  copy_test_source_files: true
+  final: true
+  recipe-maintainers:
+    - asmeurer
+    - croth1
+    - jakirkham
+    - mingwandroid
+    - msarahan
+    - msarahan
+    - ocefpaf
+    - pelson

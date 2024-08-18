@@ -1,0 +1,98 @@
+# This file created by conda-build 24.5.1
+# meta.yaml template originally from:
+# /Users/runner/work/1/s/recipe, last modified Sun Jul 14 16:24:29 2024
+# ------------------------------------------------
+
+package:
+  name: bzip2
+  version: 1.0.8
+source:
+  patches:
+    - 0001-cross.patch
+    - 0002-Windows-Make-library-name-lowercase.patch
+    - 0003-Windows-Add-dyn-lib-build-rename-libbz2_static.patch
+  sha256: ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269
+  url: https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
+build:
+  number: '7'
+  run_exports:
+    - bzip2 >=1.0.8,<2.0a0
+  string: h99b78c6_7
+requirements:
+  build:
+    - ca-certificates 2024.7.4 h8857fd0_0
+    - cctools_osx-64 986 ha1c5b94_0
+    - cctools_osx-arm64 986 h7bb7a8e_0
+    - clang 16.0.6 default_h179603d_9
+    - clang-16 16.0.6 default_h0c94c6a_9
+    - clang_impl_osx-arm64 16.0.6 ha81d56d_17
+    - clang_osx-arm64 16.0.6 h40be2b1_17
+    - clangxx 16.0.6 default_h179603d_9
+    - compiler-rt 16.0.6 ha38d28d_2
+    - compiler-rt_osx-64 16.0.6 ha38d28d_2
+    - icu 73.2 hf5e326d_0
+    - ld64_osx-64 711 ha20a434_0
+    - ld64_osx-arm64 711 h6aa3cc8_0
+    - libclang-cpp16 16.0.6 default_h0c94c6a_9
+    - libcxx 18.1.8 hef8daea_0
+    - libiconv 1.17 hd75f5a5_2
+    - libllvm16 16.0.6 hbedff68_3
+    - libxml2 2.12.7 hc603aa4_3
+    - libzlib 1.3.1 h87427d6_1
+    - llvm-tools 16.0.6 hbedff68_3
+    - macosx_deployment_target_osx-arm64 11.0 h6553868_1
+    - make 4.3 h22f3db7_1
+    - openssl 3.3.1 h87427d6_1
+    - sigtool 0.1.3 h88f4db0_0
+    - tapi 1100.0.11 h9ce4665_0
+    - xz 5.2.6 h775f41a_0
+    - zstd 1.5.6 h915ae27_0
+  host:
+    - __osx >=11.0
+  run:
+    - __osx >=11.0
+test:
+  commands:
+    - bzip2 --help
+    - test -f ${PREFIX}/bin/bunzip2
+    - test -f ${PREFIX}/bin/bzcat
+    - test -f ${PREFIX}/bin/bzcmp
+    - test -f ${PREFIX}/bin/bzdiff
+    - test -f ${PREFIX}/bin/bzegrep
+    - test -f ${PREFIX}/bin/bzfgrep
+    - test -f ${PREFIX}/bin/bzgrep
+    - test -f ${PREFIX}/bin/bzip2recover
+    - test -f ${PREFIX}/bin/bzip2
+    - test -f ${PREFIX}/bin/bzless
+    - test -f ${PREFIX}/bin/bzmore
+    - test -f ${PREFIX}/include/bzlib.h
+    - test -f ${PREFIX}/lib/libbz2.a
+    - test -f ${PREFIX}/lib/libbz2.dylib
+about:
+  description: 'Bzip2 is a freely available high-quality data compressor. It typically
+
+    compresses files to within 10% to 15% of the best available techniques,
+
+    whilst being around twice as fast at compression and six times faster
+
+    at decompression.
+
+    '
+  doc_url: http://www.bzip.org/docs.html
+  home: http://www.bzip.org/
+  license: bzip2-1.0.6
+  license_family: BSD
+  license_file: LICENSE
+  summary: high-quality data compressor
+extra:
+  copy_test_source_files: true
+  final: true
+  flow_run_id: azure_20240714.1.1
+  recipe-maintainers:
+    - isuruf
+    - jakirkham
+    - mbargull
+    - msarahan
+    - pelson
+  remote_url: https://github.com/conda-forge/bzip2-feedstock
+  sha: e044094adb40d9ac5a8dbbaa6d0854c608a2d02a

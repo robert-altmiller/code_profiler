@@ -1,0 +1,5 @@
+{
+  "curl": "8",
+  "target_platform": "osx-arm64",
+  "channel_targets": "conda-forge main"
+}

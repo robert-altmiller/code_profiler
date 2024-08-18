@@ -1,0 +1,26 @@
+{
+  "arch": "arm64",
+  "build": "h2469fbe_0_cpython",
+  "build_number": 0,
+  "constrains": [
+    "python_abi 3.10.* *_cp310"
+  ],
+  "depends": [
+    "bzip2 >=1.0.8,<2.0a0",
+    "libffi >=3.4,<4.0a0",
+    "libsqlite >=3.45.2,<4.0a0",
+    "libzlib >=1.2.13,<1.3.0a0",
+    "ncurses >=6.4.20240210,<7.0a0",
+    "openssl >=3.2.1,<4.0a0",
+    "readline >=8.2,<9.0a0",
+    "tk >=8.6.13,<8.7.0a0",
+    "tzdata",
+    "xz >=5.2.6,<6.0a0"
+  ],
+  "license": "Python-2.0",
+  "name": "python",
+  "platform": "osx",
+  "subdir": "osx-arm64",
+  "timestamp": 1710939659384,
+  "version": "3.10.14"
+}

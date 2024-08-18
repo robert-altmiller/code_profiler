@@ -1,0 +1,24 @@
+{
+    "arch": "arm64",
+    "build": "h99b78c6_7",
+    "build_number": 7,
+    "build_string": "h99b78c6_7",
+    "channel": "https://conda.anaconda.org/conda-forge/osx-arm64",
+    "constrains": [],
+    "depends": [
+        "__osx >=11.0"
+    ],
+    "fn": "bzip2-1.0.8-h99b78c6_7.conda",
+    "license": "bzip2-1.0.6",
+    "license_family": "BSD",
+    "md5": "fc6948412dbbbe9a4c9ddbbcfe0a79ab",
+    "name": "bzip2",
+    "platform": "osx",
+    "sha256": "adfa71f158cbd872a36394c56c3568e6034aa55c623634b37a4836bd036e6b91",
+    "size": 122909,
+    "subdir": "osx-arm64",
+    "timestamp": 1720974522888,
+    "track_features": "",
+    "url": "https://conda.anaconda.org/conda-forge/osx-arm64/bzip2-1.0.8-h99b78c6_7.conda",
+    "version": "1.0.8"
+}

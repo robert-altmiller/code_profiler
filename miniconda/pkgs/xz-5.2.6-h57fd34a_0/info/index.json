@@ -1,0 +1,12 @@
+{
+  "arch": "arm64",
+  "build": "h57fd34a_0",
+  "build_number": 0,
+  "depends": [],
+  "license": "LGPL-2.1 and GPL-2.0",
+  "name": "xz",
+  "platform": "osx",
+  "subdir": "osx-arm64",
+  "timestamp": 1660346961024,
+  "version": "5.2.6"
+}

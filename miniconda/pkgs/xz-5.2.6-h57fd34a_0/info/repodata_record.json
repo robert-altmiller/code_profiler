@@ -1,0 +1,21 @@
+{
+    "arch": "arm64",
+    "build": "h57fd34a_0",
+    "build_number": 0,
+    "build_string": "h57fd34a_0",
+    "channel": "https://conda.anaconda.org/conda-forge/osx-arm64",
+    "constrains": [],
+    "depends": [],
+    "fn": "xz-5.2.6-h57fd34a_0.tar.bz2",
+    "license": "LGPL-2.1 and GPL-2.0",
+    "md5": "39c6b54e94014701dd157f4f576ed211",
+    "name": "xz",
+    "platform": "osx",
+    "sha256": "59d78af0c3e071021cfe82dc40134c19dab8cdf804324b62940f5c8cd71803ec",
+    "size": 235693,
+    "subdir": "osx-arm64",
+    "timestamp": 1660346961024,
+    "track_features": "",
+    "url": "https://conda.anaconda.org/conda-forge/osx-arm64/xz-5.2.6-h57fd34a_0.tar.bz2",
+    "version": "5.2.6"
+}

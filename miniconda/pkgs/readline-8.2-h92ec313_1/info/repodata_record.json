@@ -1,0 +1,23 @@
+{
+    "arch": "arm64",
+    "build": "h92ec313_1",
+    "build_number": 1,
+    "build_string": "h92ec313_1",
+    "channel": "https://conda.anaconda.org/conda-forge/osx-arm64",
+    "constrains": [],
+    "depends": [
+        "ncurses >=6.3,<7.0a0"
+    ],
+    "fn": "readline-8.2-h92ec313_1.conda",
+    "license": "GPL-3.0-only",
+    "md5": "8cbb776a2f641b943d413b3e19df71f4",
+    "name": "readline",
+    "platform": "osx",
+    "sha256": "a1dfa679ac3f6007362386576a704ad2d0d7a02e98f5d0b115f207a2da63e884",
+    "size": 250351,
+    "subdir": "osx-arm64",
+    "timestamp": 1679532511311,
+    "track_features": "",
+    "url": "https://conda.anaconda.org/conda-forge/osx-arm64/readline-8.2-h92ec313_1.conda",
+    "version": "8.2"
+}

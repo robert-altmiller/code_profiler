@@ -1,0 +1,55 @@
+{
+    "arch": "arm64",
+    "build": "hfb2fe0b_1",
+    "build_number": 1,
+    "build_string": "hfb2fe0b_1",
+    "channel": "https://conda.anaconda.org/conda-forge/osx-arm64",
+    "constrains": [
+        "zlib 1.3.1 *_1"
+    ],
+    "depends": [
+        "__osx >=11.0"
+    ],
+    "extracted_package_dir": "/Users/robert.altmiller/repos/projects/github/code_profiler/miniconda/pkgs/libzlib-1.3.1-hfb2fe0b_1",
+    "files": [
+        "lib/libz.1.3.1.dylib",
+        "lib/libz.1.dylib"
+    ],
+    "fn": "libzlib-1.3.1-hfb2fe0b_1.conda",
+    "license": "Zlib",
+    "license_family": "Other",
+    "link": {
+        "source": "/Users/robert.altmiller/repos/projects/github/code_profiler/miniconda/pkgs/libzlib-1.3.1-hfb2fe0b_1",
+        "type": 1
+    },
+    "md5": "636077128927cf79fd933276dc3aed47",
+    "name": "libzlib",
+    "package_tarball_full_path": "/Users/robert.altmiller/repos/projects/github/code_profiler/miniconda/pkgs/libzlib-1.3.1-hfb2fe0b_1.tar.bz2",
+    "paths_data": {
+        "paths": [
+            {
+                "_path": "lib/libz.1.3.1.dylib",
+                "path_type": "hardlink",
+                "sha256": "0b01f8b83ccd018f034aa63f2d019e0296681315bf2cc3ea2757e458a5c371c6",
+                "sha256_in_prefix": "0b01f8b83ccd018f034aa63f2d019e0296681315bf2cc3ea2757e458a5c371c6",
+                "size_in_bytes": 124032
+            },
+            {
+                "_path": "lib/libz.1.dylib",
+                "path_type": "softlink",
+                "sha256_in_prefix": "0b01f8b83ccd018f034aa63f2d019e0296681315bf2cc3ea2757e458a5c371c6",
+                "size_in_bytes": 124032
+            }
+        ],
+        "paths_version": 1
+    },
+    "platform": "osx",
+    "requested_spec": "",
+    "sha256": "c34365dd37b0eab27b9693af32a1f7f284955517c2cc91f1b88a7ef4738ff03e",
+    "size": 46921,
+    "subdir": "osx-arm64",
+    "timestamp": 1716874262512,
+    "track_features": "",
+    "url": "https://conda.anaconda.org/conda-forge/osx-arm64/libzlib-1.3.1-hfb2fe0b_1.conda",
+    "version": "1.3.1"
+}

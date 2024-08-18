@@ -1,0 +1,10 @@
+{
+  "build_platform": "osx-64",
+  "c_compiler_version": "16",
+  "cxx_compiler": "clangxx",
+  "channel_targets": "conda-forge main",
+  "c_compiler": "clang",
+  "target_platform": "osx-arm64",
+  "CONDA_BUILD_SYSROOT": "/Applications/Xcode_14.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk",
+  "cxx_compiler_version": "16"
+}
