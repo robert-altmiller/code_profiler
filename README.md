@@ -85,17 +85,32 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 ## How to install the code profiler in your Python code base?
 
-- Step 1: clone down the [code_profiler](https://github.com/robert-altmiller/code_profiler) Github repository into a Databricks workspace.
+- Step 1: Clone down the [code_profiler](https://github.com/robert-altmiller/code_profiler) Github repository into a Databricks workspace.
 
     ![clone_repo.png](/code_profiler/readme_images/clone_repo.png)
 
-- Step 2: click into the '__code_profiler__' cloned repo, and copy or move the _second level_ code_profiler folder as a root level folder in your Python framework, project, or code base.
+- Step 2: Click into the '__code_profiler__' cloned repo, and copy or move the _second level_ '__code_profiler__' folder as a root level folder in your Python framework, project, or code base.
 
     ![copy_code_profiler_folder.png](/code_profiler/readme_images/copy_code_profiler_folder.png)
 
-- Step 3: open your main.py program for executing your code and add the following line to import the code profiler
+- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following line to import the code_profiler.
 
-## How is all the code profiling data captured after the profiler finishes?
+  ```python
+  # all custom and standard library imports need to execute first....
+  from code_profiler.main import *
+  
+  # update the log_file_write_path environment variable
+  log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/ayt-data-engineering-local-run/profiling/code_profiler_unit_test_py_files_in_nb"
+  print(log_file_write_path)
+
+  # add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
+  globals, function_results, nb_class_results, python_class_results = add_timer_to_all_functions(globals(), log_file_path):
+  print(f"standalone decorated functions: {function_results}")
+  print(f"notebook class decorated functions: {nb_class_results}")
+  print(f"python file class decorated functions: {python_class_results}")
+  ```
+
+## How is all the code profiling data captured after the code profiler finishes?
 
 - Each time a decorated Python function is called by a thread a record gets added to a Python queue.Queue() for that specific thread_id.  Each thread_id has a separate Python queue for storing profiling data in a 'global_thread_queue_dict' global Python dictionary.  See code snippet below for how the code profiling data is stored by thread_id.
  
