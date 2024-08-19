@@ -175,7 +175,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 - All of these local thread log text files are joined to together in one large Spark dataframe and written out to a Unity Catalog Delta table which can be queried to identify code execution performance bottlenecks.
 
-## How can I query the code profiler results from the Unity Catalog Delta table?
+## How to query the code profiler results from the Unity Catalog Delta table?
 
 - After the code profiler finishes there is a '__query_code_profiler_results_general.py__' Databricks notebook under the '__query_profiler_data__' folder for querying the code profiler results data.  It has a set of standard queries for identifying performance bottlenecks in code.
 
@@ -202,3 +202,4 @@ There are many different code profilers that exist.  Some of them are c-profiler
   - What is the Function Total Execution Time by unique_app_id and a Single Thread?
 
 ## How can I run a code_profiler unit and integration to test how it works and check the results?
+
