@@ -195,6 +195,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
   - Get a Unqiue List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads
   - Function Count and Function Total Execution Time Grouped by Function, Tenant and Thread ID
   - Function Count and Average Execution Time For All Threads Grouped by Function and unique_app_id
+  - Which Python Functions Had the Highest CPU Consumption Percentage
   - Individual Total Function Time by What is the Total Execution Time by unique_app_id and Function
   - What is the Total Execution Time by unique_app_id?
   - What is the Total Execution Time by unique_app_id and Thread?

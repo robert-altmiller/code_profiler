@@ -43,8 +43,8 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 # MAGIC DECLARE OR REPLACE catalog_name = getArgument('catalog_name');
 # MAGIC DECLARE OR REPLACE schema_name = getArgument('schema_name');
 # MAGIC DECLARE OR REPLACE table_name = getArgument('table_name');
-# MAGIC DECLARE OR REPLACE tenant_id =  getArgument('tenant_id');
-# MAGIC SELECT tenant_id, catalog_name, schema_name, table_name
+# MAGIC DECLARE OR REPLACE unqiue_app_id =  getArgument('unqiue_app_id');
+# MAGIC SELECT unqiue_app_id, catalog_name, schema_name, table_name
 
 # COMMAND ----------
 
@@ -53,12 +53,12 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 # MAGIC
 # MAGIC SELECT unique_app_id, count(DISTINCT(thread_id)) as total_threads 
 # MAGIC FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
-# MAGIC GROUP BY tenant_id
-# MAGIC ORDER BY tenant_id ASC;
+# MAGIC GROUP BY unique_app_id
+# MAGIC ORDER BY unique_app_id ASC;
 
 # COMMAND ----------
 
-# DBTITLE 1,Get a Unqiue List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads
+# DBTITLE 1,Get a Unique List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT function_name, COUNT(function_name) as function_count
@@ -68,14 +68,14 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,Function Count and Function Total Execution Time Grouped by Function, Tenant and Thread ID
+# DBTITLE 1,Function Count and Function Total Execution Time Grouped by unique_app_id, Function, and Thread ID
 # MAGIC %sql
 # MAGIC
-# MAGIC SELECT tenant_id, thread_id, function_name, COUNT(function_name) as function_count,
+# MAGIC SELECT unique_app_id, thread_id, function_name, COUNT(function_name) as function_count,
 # MAGIC         ROUND(SUM(execution_time), 2) AS total_execution_time_seconds
 # MAGIC FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
-# MAGIC WHERE tenant_id = 'xxxxxxxxxxxxx'
-# MAGIC GROUP BY tenant_id, thread_id, function_name
+# MAGIC WHERE unique_app_id = 'xxxxxxxxxxxxx'
+# MAGIC GROUP BY unique_app_id, thread_id, function_name
 # MAGIC ORDER BY function_name ASC, total_execution_time_seconds DESC;
 
 # COMMAND ----------
@@ -91,9 +91,16 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
+# DBTITLE 1,Which Python Functions Had the Highest CPU Consumption Percentage
 # MAGIC %sql
 # MAGIC
-# MAGIC SELECT * FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
+# MAGIC SELECT unique_app_id, function_name, 
+# MAGIC    ROUND(AVG(cpu_usage_percent), 2) AS cpu_usage_percent,
+#MAGIC     ROUND(AVG(memory_usage_bytes/1048576), 2) AS memory_usage_mb,
+# MAGIC    COUNT(function_name) as total_function_calls
+# MAGIC FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
+# MAGIC WHERE unique_app_id = 'xxxxxxxxxxxxx'
+# MAGIC GROUP BY unique_app_id, function_name
 # MAGIC ORDER BY cpu_usage_percent DESC
 
 # COMMAND ----------
@@ -101,17 +108,18 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 # DBTITLE 1,What is the Total Execution Time by unique_app_id
 # MAGIC %sql
 # MAGIC
-# MAGIC SELECT unique_app_id, COUNT(DISTINCT(thread_id)) as unique_thread_count, 
+# MAGIC SELECT unique_app_id, COUNT(DISTINCT(thread_id)) as unique_thread_count,
+#MAGIC         ROUND(((SUM(execution_time) / unique_thread_count)/60), 4) AS avg_execution_time_mins_allthreads,
 # MAGIC        ROUND(((SUM(execution_time) / unique_thread_count)/60)/60, 4) AS avg_execution_time_hours_allthreads,
-# MAGIC        MIN(cpu_usage_percent) AS max_cpu_usage_percent, 
-# MAGIC        ROUND(MAX(memory_usage_bytes/1048576),4) AS max_memory_usage_mb
+# MAGIC        ROUND(MAX(cpu_usage_percent), 4) AS max_cpu_usage_percent,
+# MAGIC        ROUND(MAX(memory_usage_bytes/1048576), 4) AS max_memory_usage_mb
 # MAGIC FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
 # MAGIC GROUP BY unique_app_id
 # MAGIC ORDER BY avg_execution_time_hours_allthreads DESC
 
 # COMMAND ----------
 
-# DBTITLE 1,Individual Total Function Time by What is the Total Execution Time by unique_app_id and Function
+# DBTITLE 1,Individual Total Function Time, and Average Function Time Per Function Call Grouped by unique_app_id and Function
 # MAGIC %sql
 # MAGIC
 # MAGIC -- Do this at the thread level too
@@ -126,10 +134,12 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,What is the Total Execution Time by unique_app_id?
+# DBTITLE 1,What is the Total Execution Time by unique_app_id and All Threads?
 # MAGIC %sql
 # MAGIC
-# MAGIC SELECT unique_app_id, thread_id, ROUND((SUM(execution_time)/60)/60, 4) as total_time_hours
+# MAGIC SELECT unique_app_id, thread_id, 
+# MAGIC         ROUND((SUM(execution_time)/60), 4) as total_time_mins,
+# MAGIC         ROUND((SUM(execution_time)/60)/60, 4) as total_time_hours
 # MAGIC FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
 # MAGIC WHERE unique_app_id = 'xxxxxxxxxxxxx'
 # MAGIC GROUP BY unique_app_id, thread_id
@@ -137,14 +147,14 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,What is the Total Execution Time by unique_app_id and Thread?
+# DBTITLE 1,What is the Function Total Execution Time by unique_app_id and a Single Thread?
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT unique_app_id, thread_id, function_name,
 # MAGIC        ROUND((SUM(execution_time)/60)/60, 4) AS execution_time_hours,
-# MAGIC        ROUND(AVG(cpu_usage_percent),4) AS cpu_usage_percent, 
-# MAGIC        ROUND(AVG(memory_usage_bytes)/1048576,4) AS memory_usage_mb
+# MAGIC        ROUND(AVG(cpu_usage_percent), 4) AS cpu_usage_percent, 
+# MAGIC        ROUND(AVG(memory_usage_bytes)/1048576, 4) AS memory_usage_mb
 # MAGIC FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
-# MAGIC WHERE unique_app_id = 'xxxxxxxxxxxxx' and thread_id = '140534042109504'
+# MAGIC WHERE unique_app_id = 'xxxxxxxxxxxxx' and thread_id = '134291254474304'
 # MAGIC GROUP BY unique_app_id, thread_id, function_name
 # MAGIC ORDER BY execution_time_hours DESC
