@@ -31,8 +31,10 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ## How is this code profiler different from other code profilers?
 
-- The timer() code profiling Python decorator for standalone Python functions, Databricks class functions, and Python file class functions can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  We initially decorated the functions and class functions _manually_ with the @timer decorator but this was cumbersome for very large codebases.  
-- We added automation to add the timer() decorator to all standalone Python functions and class functions and also update the globals() dictionary namespace with the newly decorated functions.  The sections in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) to pay attention to are the follwing:
+- The timer() code profiling Python decorator is for standalone Python functions, Databricks notebook class functions, and Python file class functions.  It can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  We initially decorated the functions and class functions _manually_ with the @timer decorator but this was cumbersome for very large codebases.
+- It is important that we do not decorate standard library functions such as those found in the pyspark Python library. We added functions to filter out standard library functions so they do not get decorated with the @timer Python decorator.
+- We added automation to add the timer() decorator to all standalone Python functions and class functions and also update the globals() dictionary namespace with the newly decorated functions.  
+- The sections in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) to pay attention to are the follwing:
   
   - __Code Profling timer() Decorator Function__
   - __Apply Timer Function to all Databricks Notebook Classes__
@@ -45,16 +47,13 @@ There are many different code profilers that exist.  Some of them are c-profiler
   ```python
   # step 1: original_recursion_limit is set in the env_vars.py file.
   original_recursion_limit = sys.getrecursionlimit()
-
   # step 2: when the @timer() decorator is called so we increment the recursion limit by 1.
   sys.setrecursionlimit(sys.getrecursionlimit() + 1)
-
   # step 3: set and keep track of the thead_local.depth by thread.  This is set one time, and each thread has its own thread_local.depth variable.
   if not hasattr(thread_local, 'depth'):
     thread_local.depth = 0
   # step 4: when the @timer decorator is called we increment the thread_local.depth by 1.
   thread_local.depth += 1
-
   # step 5: when the @timer decorator call finishes we decrement the thread_local.depth by 1, 
   # and when the thread_local.depth = 0 indicates code execution (e.g. recursion) has finished so reset the recursion limit back to the original_recursion_limit.
   finally: 
