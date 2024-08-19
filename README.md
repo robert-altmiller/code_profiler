@@ -47,13 +47,17 @@ There are many different code profilers that exist.  Some of them are c-profiler
   ```python
   # step 1: original_recursion_limit is set in the env_vars.py file.
   original_recursion_limit = sys.getrecursionlimit()
+
   # step 2: when the @timer() decorator is called so we increment the recursion limit by 1.
   sys.setrecursionlimit(sys.getrecursionlimit() + 1)
+
   # step 3: set and keep track of the thead_local.depth by thread.  This is set one time, and each thread has its own thread_local.depth variable.
   if not hasattr(thread_local, 'depth'):
     thread_local.depth = 0
+
   # step 4: when the @timer decorator is called we increment the thread_local.depth by 1.
   thread_local.depth += 1
+
   # step 5: when the @timer decorator call finishes we decrement the thread_local.depth by 1, 
   # and when the thread_local.depth = 0 indicates code execution (e.g. recursion) has finished so reset the recursion limit back to the original_recursion_limit.
   finally: 
@@ -78,6 +82,18 @@ There are many different code profilers that exist.  Some of them are c-profiler
       print(f"function_name: {func.__name__}()")
       print(f"thread id: {thread_id} recursion limit: {sys.getrecursionlimit()}\n")
     ```
+
+## How to install the code profiler in your Python code base?
+
+- Step 1: clone down the [code_profiler](https://github.com/robert-altmiller/code_profiler) Github repository into a Databricks workspace.
+
+    ![clone_repo.png](/code_profiler/readme_images/clone_repo.png)
+
+- Step 2: click into the '__code_profiler__' cloned repo, and copy or move the _second level_ code_profiler folder as a root level folder in your Python framework, project, or code base.
+
+    ![copy_code_profiler_folder.png](/code_profiler/readme_images/copy_code_profiler_folder.png)
+
+- Step 3: open your main.py program for executing your code and add the following line to import the code profiler
 
 ## How is all the code profiling data captured after the profiler finishes?
 
