@@ -79,7 +79,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
     print(f"function_name: {func.__name__}()")
     print(f"thread id: {thread_id} recursion limit: {sys.getrecursionlimit()}\n")
   ```
-  
+
 ## How is all the code profiling data captured after the profiler finishes?
 
 - Each time a decorated Python function is called by a thread a record gets added to a Python queue.Queue() for that specific thread_id.  Each thread_id has a separate Python queue for storing profiling data in a 'global_thread_queue_dict' global Python dictionary.  See code snippet below for how the code profiling data is stored by thread_id.
