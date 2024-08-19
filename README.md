@@ -93,14 +93,14 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
     ![copy_code_profiler_folder.png](/code_profiler/readme_images/copy_code_profiler_folder.png)
 
-- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following line to import the code_profiler.
+- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following lines to import the environment variables and code_profiler modules, and also decorate all in-scope Python functions.
 
   ```python
   # all custom and standard library imports need to execute first....
   from code_profiler.main import *
   
   # update the log_file_write_path environment variable
-  log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/ayt-data-engineering-local-run/profiling/code_profiler_unit_test_py_files_in_nb"
+  log_file_write_path = f"/Workspace/Users/robert.altmiller@databricks.com/code_profiling/{unique_app_id}/{datetime.now().date()}"
   print(log_file_write_path)
 
   # add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
@@ -108,6 +108,21 @@ There are many different code profilers that exist.  Some of them are c-profiler
   print(f"standalone decorated functions: {function_results}")
   print(f"notebook class decorated functions: {nb_class_results}")
   print(f"python file class decorated functions: {python_class_results}")
+  ```
+
+- Step 4: After the main program code executes add the following lines to the end of your '__main.py__' to join all the code profiler data log files together in Spark dataframe and write the results to a Unity Catalog Delta table.
+
+  ```python
+  write_all_code_profiling_logs_and_create_delta_table(
+      spark = spark,
+      global_thread_queue_dict = global_thread_queue_dict, # DO NOT MODIFY
+      mqueue_batch_size = mqueue_batch_size, 
+      catalog = "hive_metastore", # MODIFY
+      schema = "default", # MODIFY
+      table_name = "code_profiler_data", # MODIFY
+      overwrite_profiling_data = True, # MODIFY ()
+      log_file_path = log_file_write_path # DO NOT MODIFY
+  )
   ```
 
 ## How is all the code profiling data captured after the code profiler finishes?

@@ -318,7 +318,7 @@ def get_all_profiling_results_joined(directory_path):
     return log_messages_combined[:-1] # drop the last comma
 
 
-def write_profiling_results_to_delta_table(spark, directory_path, catalog, schema, table_name, delete_data):
+def write_profiling_results_to_delta_table(spark, directory_path, catalog, schema, table_name, delete_table):
     """write all the joined code profiling results to a delta table"""
     profiling_data = get_all_profiling_results_joined(directory_path)
     # split the profiling_data into individual lines
@@ -359,8 +359,11 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
     spark.sql(f"USE CATALOG {catalog}")
     spark.sql(f"USE SCHEMA {schema}")
     delta_table_path = f"`{catalog}`.`{schema}`.`{table_name}`"
-    if delete_data: spark.sql(f"DROP TABLE IF EXISTS {delta_table_path}")
-    log_message_df.write.format("delta").mode("overwrite").option("mergeSchema", "true").saveAsTable(delta_table_path)
+    if delete_table: # overwrite table
+        spark.sql(f"DROP TABLE IF EXISTS {delta_table_path}")
+        log_message_df.write.format("delta").mode("overwrite").option("mergeSchema", "true").saveAsTable(delta_table_path)
+    else: # append table
+        log_message_df.write.format("delta").mode("append").option("mergeSchema", "true").saveAsTable(delta_table_path)
     return log_message_df
 
 
@@ -372,7 +375,7 @@ def create_code_profiling_results_delta_table(spark, catalog, schema, table_name
         catalog = catalog,
         schema = schema,
         table_name = table_name,
-        delete_data = overwrite_profiling_data
+        delete_table = overwrite_profiling_data
     )
 
 
