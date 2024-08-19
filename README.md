@@ -66,12 +66,20 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 ## How to update the local environment variables?
 
-- Environment variables are defined in the [env-vars.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/env_vars.py) Python file.  Please update __'log_file_write_path'__ and __'python_class_scopes'__ environment variables prior to running the code profiler.  
+- Environment variables are defined in the [env-vars.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/env_vars.py) Python file.  Please update and set __'log_file_write_path'__ and __'python_class_scopes'__ environment variables prior to running the code profiler.  The '__mqueue_batch_size__' variable default value is 500, and the '__print_recursion_limit__' default value is false.  It is optional to change these.
 - The __'log_file_write_path'__ is used to specify the Databricks File System (DBFS) location where to write the code profiling data log files.
 - The __'python_class_scopes'__ is used to specify the Python classes and/or Python code frameworks that have the Python functions defined that need to be decorated with the@ timer decorator.  The 'notebooks' and `'__main__'` attributes of the __'python_class_scopes'__  environment variable are mandatory and _SHOULD NOT BE REMOVED_.
 
   ![env_vars.png](/code_profiler/readme_images/env_vars.png)
 
+-   If you set the '__print_recursion_limit__' to true the dynamic recursion limit will print each time the @timer decorators is called by a thread.  This code below is in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.
+  
+  ```python
+  if print_recursion_limit == True:
+    print(f"function_name: {func.__name__}()")
+    print(f"thread id: {thread_id} recursion limit: {sys.getrecursionlimit()}\n")
+  ```
+  
 ## How is all the code profiling data captured after the profiler finishes?
 
 - Each time a decorated Python function is called by a thread a record gets added to a Python queue.Queue() for that specific thread_id.  Each thread_id has a separate Python queue for storing profiling data in a 'global_thread_queue_dict' global Python dictionary.  See code snippet below for how the code profiling data is stored by thread_id.
