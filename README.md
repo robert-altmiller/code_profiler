@@ -40,6 +40,10 @@ There are many different code profilers that exist.  Some of them are c-profiler
   - __Apply Timer Code Profiling Function to all Standalone Functions__
   - __Create Delta Table From Code Profiling Log Files__
 
+## How to update the local environment variables?
+
+- Environment variables are defined in the [env-vars.py](/code_profiler/blob/main/code_profiler/env_vars.py) Python file.
+
 ## How is all the code profiling data captured after the profiler finishes?
 
 - Each time a decorated Python function is called by a thread a record gets added to a Python queue.Queue() for that specific thread_id.  Each thread_id has a separate Python queue for storing profiling data in a 'global_thread_queue_dict' global Python dictionary.  See code snippet below for how the code profiling data is stored by thread_id.
@@ -53,7 +57,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
   global_thread_queue_dict[thread_id].put(log_message_dict) 
   ```
 
-- At the end of the code profiler execution all the captured profiling data by thread_id in the 'global_thread_queue_dict' global dictionary is written out to the Databricks File System (DFBS) in a log file named '{thread_id}_log.txt' for each thread.  Multithreading is used to process each thread_id queue in the 'global_thread_queue_dict' dictionary in parallel and create all the log files at once.
+- At the end of the code profiler execution all the captured profiling data by thread_id in the 'global_thread_queue_dict' global dictionary is written out to the Databricks File System (DFBS) in a log file named '{thread_id}_log.txt' for each thread.  Multithreading is used to process each thread_id queue.Queue() in the 'global_thread_queue_dict' dictionary in parallel and create all the log files at once.
 
   ```python
   def write_to_log(queue, thread_id, batch_size, log_file_path):
@@ -89,3 +93,5 @@ There are many different code profilers that exist.  Some of them are c-profiler
   ```
 
 - All of these local thread log text files are joined to together in one large Spark dataframe and written out to a Unity Catalog Delta table which can be queried to identify code execution performance bottlenecks.
+
+## How can I query the code profiler results from the Unity Catalog Delta table?  What standard queries exist to analyze performance bottlenecks?
