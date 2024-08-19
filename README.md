@@ -32,13 +32,15 @@ There are many different code profilers that exist.  Some of them are c-profiler
   ## How is this code profiler different from other code profilers?
 
 - The timer() code profiling Python decorator for standalone Python functions, Databricks class functions, and Python file class functions can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  We initially decorated the functions and class functions _manually_ with the @timer decorator but this was cumbersome for very large codebases.  
-- We added automation to add the timer() decorator to all standalone and class functions and update the globals() dictionary namespace with the newly decorated functions.  The sections in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) to pay attention to are the follwing:
+- We added automation to add the timer() decorator to all standalone Python functions and class functions and also update the globals() dictionary namespace with the newly decorated functions.  The sections in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) to pay attention to are the follwing:
   
   - __Code Profling timer() Decorator Function__
   - __Apply Timer Function to all Databricks Notebook Classes__
   - __Apply Timer Code Profiling Function to all Python File Classes__
   - __Apply Timer Code Profiling Function to all Standalone Functions__
   - __Create Delta Table From Code Profiling Log Files__
+
+- When running the code profiler against large code bases that use deep recursion (e.g. complex json payload flatteners) it is important to dynamically contol the recursion limit to prevent out of memory errors during code profiling execution.
 
 ## How to update the local environment variables?
 
