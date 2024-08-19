@@ -356,14 +356,15 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         .withColumn("arguments", split(col("arguments"), ",XSEPX,")) \
         .withColumn("kwargs", split(col("kwargs"), ",XSEPX,"))
     
-    spark.sql(f"USE CATALOG {catalog}")
-    spark.sql(f"USE SCHEMA {schema}")
-    delta_table_path = f"`{catalog}`.`{schema}`.`{table_name}`"
-    if delete_table: # overwrite table
-        spark.sql(f"DROP TABLE IF EXISTS {delta_table_path}")
-        log_message_df.write.format("delta").mode("overwrite").option("mergeSchema", "true").saveAsTable(delta_table_path)
-    else: # append table
-        log_message_df.write.format("delta").mode("append").option("mergeSchema", "true").saveAsTable(delta_table_path)
+    if is_running_in_databricks() == True: # then create Delta table
+        spark.sql(f"USE CATALOG {catalog}")
+        spark.sql(f"USE SCHEMA {schema}")
+        delta_table_path = f"`{catalog}`.`{schema}`.`{table_name}`"
+        if delete_table: # overwrite table
+            spark.sql(f"DROP TABLE IF EXISTS {delta_table_path}")
+            log_message_df.write.format("delta").mode("overwrite").option("mergeSchema", "true").saveAsTable(delta_table_path)
+        else: # append table
+            log_message_df.write.format("delta").mode("append").option("mergeSchema", "true").saveAsTable(delta_table_path)
     return log_message_df
 
 

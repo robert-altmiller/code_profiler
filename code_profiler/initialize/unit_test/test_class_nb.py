@@ -1,5 +1,5 @@
 # Databricks notebook source
- class Inventory:
+class Inventory:
     def __init__(self):
         # Initializes the inventory with an empty dictionary
         self.items = {}

@@ -1,14 +1,18 @@
-# Clear the widgets
-dbutils.widgets.removeAll()
-
 # Library Imports
 from code_profiler.main import *
 from code_profiler.initialize.unit_test.test_functions import *
 from code_profiler.initialize.unit_test.test_class import *
 
+
 # Change the log_file_write_path
-log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/ayt-data-engineering-local-run/profiling/code_profiler_test_py_files_in_python_file"
+if is_running_in_databricks == True:
+    # Clear the widgets
+    dbutils.widgets.removeAll()
+    # Change the log_file_write_path
+    log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/code_profiling/code_profiler_test_py_files_in_python_file"
+else: log_file_write_path = "./code_profiling/code_profiler_test_py_files_in_python_file"
 print(log_file_write_path)
+
 
 # Example usage: Call these functions after all imports
 globals, functions_results = apply_timer_decorator_to_all_python_functions(globals(), log_file_path = log_file_write_path) # python standalone functions 
@@ -40,7 +44,7 @@ print("\n")
 
 
 # Create Code Profiling Logs and Write Code Profiling Results to Delta Table
-write_all_code_profiling_logs_and_create_delta_table(
+log_message_df = write_all_code_profiling_logs_and_create_delta_table(
     spark = spark,
     global_thread_queue_dict = global_thread_queue_dict,
     mqueue_batch_size = mqueue_batch_size, 
@@ -50,3 +54,4 @@ write_all_code_profiling_logs_and_create_delta_table(
     overwrite_profiling_data = True,
     log_file_path = log_file_write_path
 )
+log_message_df.show()

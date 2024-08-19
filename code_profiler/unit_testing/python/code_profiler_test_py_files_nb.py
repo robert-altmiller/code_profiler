@@ -1,9 +1,4 @@
 # Databricks notebook source
-# DBTITLE 1,Delete Existing Widgets
-dbutils.widgets.removeAll()
-
-# COMMAND ----------
-
 # DBTITLE 1,Import the Python Code Profiler
 from code_profiler.main import *
 
@@ -15,7 +10,13 @@ from code_profiler.initialize.unit_test.test_class import *
 
 # COMMAND ----------
 
-log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/ayt-data-engineering-local-run/profiling/code_profiler_unit_test_py_files_in_nb"
+# DBTITLE 1,Check if running locally in Databricks and set the log_file_write_path
+if is_running_in_databricks == True:
+    # Clear the widgets
+    dbutils.widgets.removeAll()
+    # Change the log_file_write_path
+    log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/code_profiling/code_profiler_unit_test_py_files_in_nb"
+else: log_file_write_path = "./code_profiling/code_profiler_unit_test_py_files_in_nb"
 print(log_file_write_path)
 
 # COMMAND ----------
@@ -57,7 +58,7 @@ print("Max in list [1, 99, 34, 56]:", max_in_list([1, 99, 34, 56]))
 # COMMAND ----------
 
 # DBTITLE 1,Create Code Profiling Logs and Write Code Profiling Results to Delta Table
-write_all_code_profiling_logs_and_create_delta_table(
+log_message_df = write_all_code_profiling_logs_and_create_delta_table(
     spark = spark,
     global_thread_queue_dict = global_thread_queue_dict,
     mqueue_batch_size = mqueue_batch_size, 
@@ -67,3 +68,4 @@ write_all_code_profiling_logs_and_create_delta_table(
     overwrite_profiling_data = True,
     log_file_path = log_file_write_path
 )
+log_message_df.show()

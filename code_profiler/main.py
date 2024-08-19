@@ -22,4 +22,5 @@ def write_all_code_profiling_logs_and_create_delta_table(spark, global_thread_qu
     # create code profiling data log files
     process_global_thread_queue_dict(global_thread_queue_dict, mqueue_batch_size, log_file_path)
     # create_code_profiling_results_delta_table
-    create_code_profiling_results_delta_table(spark, catalog, schema, table_name,  overwrite_profiling_data, log_file_path)
+    log_message_df = create_code_profiling_results_delta_table(spark, catalog, schema, table_name,  overwrite_profiling_data, log_file_path)
+    return log_message_df

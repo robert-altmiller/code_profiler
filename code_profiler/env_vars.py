@@ -6,14 +6,27 @@ from pyspark.sql.functions import *
 from pyspark.sql import SparkSession
 from functools import wraps
 
+
+def is_running_in_databricks():
+    """check if code is running in Databricks or locally"""
+    # Databricks typically sets these environment variables
+    if 'DATABRICKS_RUNTIME_VERSION' in os.environ:
+        print("code is running in databricks....\n")
+        return True
+    else:
+        #print("code is running locally....\n")
+        return False
+
+
 # unique identifer for python code / application name (OPTIONAL MODIFY)
 unique_app_id = "xxxxxxxxxxxxx" 
 print(f"unique_app_id: {unique_app_id}")
 
-# create a new local Spark session (DO NOT MODIFY)
-spark_local = SparkSession.builder \
-    .appName("CodeProfiling") \
-    .getOrCreate()
+if is_running_in_databricks() == False:
+    # create a new local Spark session (DO NOT MODIFY)
+    spark = SparkSession.builder \
+        .appName("CodeProfiling") \
+        .getOrCreate()
 
 # local parameters (DO NOT MODIFY)
 thread_local = threading.local()
