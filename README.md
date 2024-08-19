@@ -43,24 +43,25 @@ There are many different code profilers that exist.  Some of them are c-profiler
 - When running the code profiler against large code bases that use deep recursion (e.g. complex json payload flatteners) it is important to dynamically contol the recursion limit to prevent out of memory errors during code profiler execution.  This is accomplished directly in the timer() Python function in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  The __'original_recursion_limit'__ is set in the [env-vars.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/env_vars.py) Python file.  See explanation below for how we dynamically control the recursion limit.
 
   ```python
-  # original_recursion_limit is set in the env_vars.py file.
+  # step 1: original_recursion_limit is set in the env_vars.py file.
   original_recursion_limit = sys.getrecursionlimit()
 
-  # when the @timer() decorator is called so we increment the recursion limit by 1.
+  # step 2: when the @timer() decorator is called so we increment the recursion limit by 1.
   sys.setrecursionlimit(sys.getrecursionlimit() + 1)
 
-  # set and keep track of the thead_local.depth by thread.  This is set one time.
+  # step 3: set and keep track of the thead_local.depth by thread.  This is set one time, and each thread has its own thread_local.depth variable.
   if not hasattr(thread_local, 'depth'):
     thread_local.depth = 0
-  # when the @time decorator is called we increment the thread_local.depth by 1.
+  # step 4: when the @timet decorator is called we increment the thread_local.depth by 1.
   thread_local.depth += 1
 
-  finally: # when the thread_local.depth = 0 indicates recursion has finished so reset the recursion limit back to the original_recursion_limit
+  # step 5: when the @timer decorator call finishes we decrement the thread_local.depth by 1, 
+  # and when the thread_local.depth = 0 indicates code execution (e.g. recursion) has finished so reset the recursion limit back to the original_recursion_limit.
+  finally: 
       thread_local.depth -= 1
       # Restore the original recursion limit
       if thread_local.depth == 0:
           sys.setrecursionlimit(original_recursion_limit)
-      # Check queue size, and write logs in batches of mqueue_batch_size
   ```
 
 ## How to update the local environment variables?
