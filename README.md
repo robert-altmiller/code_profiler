@@ -93,14 +93,14 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
     ![copy_code_profiler_folder.png](/code_profiler/readme_images/copy_code_profiler_folder.png)
 
-- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following lines to import the environment variables and code_profiler modules, and also decorate all in-scope Python functions.
+- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following lines to import the environment variables and code_profiler modules, and also decorate all in-scope Python functions.  Make sure to update the email in the '__log_file_write_path__' below to match your Databricks workspace requirements.
 
   ```python
   # all custom and standard library imports need to execute first....
   from code_profiler.main import *
   
   # update the log_file_write_path environment variable
-  log_file_write_path = f"/Workspace/Users/robert.altmiller@sap.com/code_profiling/{unique_app_id}/{datetime.now().date()}"
+  log_file_write_path = f"/Workspace/Users/robert.altmiller@databricks.com/code_profiling/{unique_app_id}/{datetime.now().date()}"
   print(log_file_write_path)
 
   # add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
