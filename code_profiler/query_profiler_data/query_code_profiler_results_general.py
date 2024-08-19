@@ -1,4 +1,11 @@
 # Databricks notebook source
+
+
+# DBTITLE 1,Remove All Widgets
+dbutils.widgets.removeAll()
+
+# COMMAND ----------
+
 # DBTITLE 1,Library Imports
 import glob, os, json, time, ast
 from datetime import datetime
@@ -11,7 +18,7 @@ from pyspark.sql.functions import *
 catalog = "hive_metastore" # MODIFY
 schema = "default" # MODIFY
 table_name = "code_profiler_data" # MODIFY
-tenant_id = "5d856b7a_ab5d_4338_9401_0394dd1da677" # MODIFY
+unqiue_app_id = "xxxxxxxxxxxxx" # MODIFY
 
 # COMMAND ----------
 
@@ -26,7 +33,7 @@ display(code_profiler_df)
 dbutils.widgets.text("catalog_name", catalog, "Catalog Name")
 dbutils.widgets.text("schema_name", schema, "Schema Name")
 dbutils.widgets.text("table_name", table_name, "Table Name")
-dbutils.widgets.text("tenant_id", tenant_id, "Tenant ID")
+dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
