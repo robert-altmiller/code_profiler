@@ -189,15 +189,16 @@ There are many different code profilers that exist.  Some of them are c-profiler
   table_name = "code_profiler_data" # MODIFY
   ```
 
-- Spark.sql() queries exist for the following:
+- General Spark.sql() queries exist for the following:
   
-  - How many total unique threads by unique_app_id?
-  - Get a Unqiue List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads
-  - Function Count and Function Total Execution Time Grouped by Function, Tenant and Thread ID
-  - Function Count and Average Execution Time For All Threads Grouped by Function and unique_app_id
-  - Which Python Functions Had the Highest CPU Consumption Percentage
-  - Individual Total Function Time by What is the Total Execution Time by unique_app_id and Function
-  - What is the Total Execution Time by unique_app_id?
-  - What is the Total Execution Time by unique_app_id and Thread?
+  - How Many Total Unique Threads Exist Grouped By unique_app_id?
+  - Get a Unique List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads.
+  - Get Function Count and Function Total Execution Time Grouped by unique_app_id, Function, and Thread.
+  - Get Function Count and Average Execution Time For All Threads Grouped by Function and unique_app_id.
+  - Which Python Functions Had the Highest CPU Consumption Percentage? 
+  - What is the Total Execution Time by unique_app_id for All Threads?
+  - Get Individual Total Function Time, and Average Function Time Per Function Call Grouped by unique_app_id and Function.
+  - What is the Total Execution Time by unique_app_id and All Threads?
+  - What is the Function Total Execution Time by unique_app_id and a Single Thread?
 
 ## How can I run a code_profiler unit and integration to test how it works and check the results?

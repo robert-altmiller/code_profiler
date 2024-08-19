@@ -48,7 +48,7 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,How many total unique threads by unique_app_id
+# DBTITLE 1,How Many Total Unique Threads Exist Grouped By unique_app_id?
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT unique_app_id, count(DISTINCT(thread_id)) as total_threads 
@@ -58,7 +58,7 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,Get a Unique List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads
+# DBTITLE 1,Get a Unique List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads.
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT function_name, COUNT(function_name) as function_count
@@ -68,7 +68,7 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,Function Count and Function Total Execution Time Grouped by unique_app_id, Function, and Thread ID
+# DBTITLE 1,Function Count and Function Total Execution Time Grouped by unique_app_id, Function, and Thread.
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT unique_app_id, thread_id, function_name, COUNT(function_name) as function_count,
@@ -80,7 +80,7 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,Function Count and Average Execution Time For All Threads Grouped by Function and unique_app_id
+# DBTITLE 1,Function Count and Average Execution Time For All Threads Grouped by Function and unique_app_id.
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT unique_app_id, function_name, COUNT(function_name) as function_count, COUNT(DISTINCT(thread_id)) as total_threads,
@@ -91,7 +91,7 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,Which Python Functions Had the Highest CPU Consumption Percentage
+# DBTITLE 1,Which Python Functions Had the Highest CPU Consumption Percentage.
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT unique_app_id, function_name, 
@@ -105,7 +105,7 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,What is the Total Execution Time by unique_app_id
+# DBTITLE 1,What is the Total Execution Time by unique_app_id for All Threads?
 # MAGIC %sql
 # MAGIC
 # MAGIC SELECT unique_app_id, COUNT(DISTINCT(thread_id)) as unique_thread_count,
@@ -119,7 +119,7 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 
 # COMMAND ----------
 
-# DBTITLE 1,Individual Total Function Time, and Average Function Time Per Function Call Grouped by unique_app_id and Function
+# DBTITLE 1,Individual Total Function Time, and Average Function Time Per Function Call Grouped by unique_app_id and Function.
 # MAGIC %sql
 # MAGIC
 # MAGIC -- Do this at the thread level too
