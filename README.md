@@ -100,7 +100,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
   from code_profiler.main import *
   
   # update the log_file_write_path environment variable
-  log_file_write_path = f"/Workspace/Users/robert.altmiller@databricks.com/code_profiling/{unique_app_id}/{datetime.now().date()}"
+  log_file_write_path = f"/Workspace/Users/robert.altmiller@sap.com/code_profiling/{unique_app_id}/{datetime.now().date()}"
   print(log_file_write_path)
 
   # add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.

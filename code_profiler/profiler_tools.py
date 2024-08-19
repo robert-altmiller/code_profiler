@@ -339,7 +339,7 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         StructField("ingestion_date", StringType(), True),
         StructField("thread_id", StringType(), True),
         StructField("process_id", StringType(), True),
-        StructField("tenant_id", StringType(), True),
+        StructField("unique_app_id", StringType(), True),
         StructField("function_name", StringType(), True),
         StructField("execution_time", StringType(), True),
         StructField("start_time", StringType(), True),
