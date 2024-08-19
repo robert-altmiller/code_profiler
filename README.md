@@ -75,7 +75,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 -   If you set the '__print_recursion_limit__' to true the dynamic recursion limit will print each time the @timer decorators is called by a thread.  This code below is in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.
   
     ```python
-    if print_recursion_limit == True:
+    if print_recursion_limit == True: # print the recursion limit within a running thread
       print(f"function_name: {func.__name__}()")
       print(f"thread id: {thread_id} recursion limit: {sys.getrecursionlimit()}\n")
     ```
