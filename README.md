@@ -93,7 +93,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
     ![copy_code_profiler_folder.png](/code_profiler/readme_images/copy_code_profiler_folder.png)
 
-- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following lines to import the environment variables and code_profiler modules, and also decorate all in-scope Python functions.  Make sure to update the email in the '__log_file_write_path__' below to match your Databricks workspace requirements.
+- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following lines to import the environment variables and code_profiler modules, and also decorate all in-scope Python functions.  Make sure to _update the email_ in the '__log_file_write_path__' below to match your Databricks workspace requirements.
 
   ```python
   # all custom and standard library imports need to execute first....
@@ -189,7 +189,14 @@ There are many different code profilers that exist.  Some of them are c-profiler
   table_name = "code_profiler_data" # MODIFY
   ```
 
-- Spark.sql() queries exist for the following: 
-
+- Spark.sql() queries exist for the following:
+  
+  - How many total unique threads by unique_app_id?
+  - Get a Unqiue List of Python Functions Profiled with Code Profiler and How Many Times They Are Called Across All Threads
+  - Function Count and Function Total Execution Time Grouped by Function, Tenant and Thread ID
+  - Function Count and Average Execution Time For All Threads Grouped by Function and unique_app_id
+  - Individual Total Function Time by What is the Total Execution Time by unique_app_id and Function
+  - What is the Total Execution Time by unique_app_id?
+  - What is the Total Execution Time by unique_app_id and Thread?
 
 ## How can I run a code_profiler unit and integration to test how it works and check the results?
