@@ -203,10 +203,15 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 ## How can I run a code_profiler unit and integration to test how it works and check the results?
 
-- There are 3 different unit test that can be run locally or in Databricks to test out the code profiler execution.  If you run these unit tests locally in an integrated development environment (IDE) local code profiler log text files will be created and a Spark dataframe will be created that has all the results from the code profiling log text files.  A persisted Delta table will __NOT__ be created in Databricks Unity Catalog (UC).  You can find the unit tests in the following location:
+- There are 3 different unit test that can be run locally or in Databricks to test out the code profiler execution.  If you run these unit tests locally in an integrated development environment (IDE) local code profiler data log text files will be created and a Spark dataframe will be created that has all the results from the code profiling log data text files.  A persisted Delta table will __NOT__ be created in Databricks Unity Catalog (UC).  You can find the unit tests in the following location:
 
     ![code_profiler_unit_tests.png](/code_profiler/readme_images/code_profiler_unit_tests.png)
 
 - Here is the location of the unit test notebooks, and the standalone Python functions and class functions used by the code profiler unit tests.
 
     ![code_profiler_unit_tests_organization.png](/code_profiler/readme_images/code_profiler_unit_tests_organization.png)
+
+- When you run a unit test notebook here is how to verify if the unit test completed successfully in your IDE or in Databricks.
+
+
+    ![unit_test_local_run_results.png](/code_profiler/readme_images/unit_test_local_run_results.png)
