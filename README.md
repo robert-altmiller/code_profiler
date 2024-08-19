@@ -42,7 +42,9 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 ## How to update the local environment variables?
 
-- Environment variables are defined in the [env-vars.py](/code_profiler/blob/main/code_profiler/env_vars.py) Python file.
+- Environment variables are defined in the [env-vars.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/env_vars.py) Python file.  Please update __log_file_write_path__ and __python_class_scopes__ environment variables prior to running the code profiler.  The __log_file_write_path__ is used to specify the Databricks File System (DBFS) location where to write the local code profiling data log files.  The __python_class_scopes__ is used to specify the Python classes and Python code frameworks that have the functions defined that need to be decorated with the @timer Python decorator.
+
+  ![env_vars.png](/code_profiler/readme_images/env_vars.png)
 
 ## How is all the code profiling data captured after the profiler finishes?
 
