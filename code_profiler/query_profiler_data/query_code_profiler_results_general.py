@@ -8,10 +8,10 @@ from pyspark.sql.functions import *
 # COMMAND ----------
 
 # DBTITLE 1,Local Parameters
-catalog = "hive_metastore" # update / change
-schema = "default" # update / change
-table_name = "code_profiler_local_run_largest_tenant" # update / change
-tenant_id = "5d856b7a_ab5d_4338_9401_0394dd1da677" # update / change
+catalog = "hive_metastore" # MODIFY
+schema = "default" # MODIFY
+table_name = "code_profiler_data" # MODIFY
+tenant_id = "5d856b7a_ab5d_4338_9401_0394dd1da677" # MODIFY
 
 # COMMAND ----------
 

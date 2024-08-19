@@ -177,3 +177,19 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 ## How can I query the code profiler results from the Unity Catalog Delta table?
 
+- After the code profiler finishes there is a '__query_code_profiler_results_general.py__' Databricks notebook under the '__query_profiler_data__' folder for querying the code profiler results data.  It has a set of standard queries for identifying performance bottlenecks in code.
+
+    ![query_profiler_data.png](/code_profiler/readme_images/query_profiler_data.png)
+
+- Before running any of the queries please update the following variables in the '__query_code_profiler_results_general.py__' Databricks notebook.
+
+  ```python
+  catalog = "hive_metastore" # MODIFY
+  schema = "default" # MODIFY
+  table_name = "code_profiler_data" # MODIFY
+  ```
+
+- Spark.sql() queries exist for the following: 
+
+
+## How can I run a code_profiler unit and integration to test how it works and check the results?
