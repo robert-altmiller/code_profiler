@@ -44,7 +44,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 - Environment variables are defined in the [env-vars.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/env_vars.py) Python file.  Please update __'log_file_write_path'__ and __'python_class_scopes'__ environment variables prior to running the code profiler.  
 - The __'log_file_write_path'__ is used to specify the Databricks File System (DBFS) location where to write the code profiling data log files.
-- The __'python_class_scopes'__ is used to specify the Python classes and/or Python code frameworks that have the Python functions defined that need to be decorated with the@ timer decorator.  The 'notebooks' and '_ main _' attributes of the __'python_class_scopes'__  environment variable are mandatory and _SHOULD NOT BE REMOVED_.
+- The __'python_class_scopes'__ is used to specify the Python classes and/or Python code frameworks that have the Python functions defined that need to be decorated with the@ timer decorator.  The 'notebooks' and `'__main__'` attributes of the __'python_class_scopes'__  environment variable are mandatory and _SHOULD NOT BE REMOVED_.
 
   ![env_vars.png](/code_profiler/readme_images/env_vars.png)
 
