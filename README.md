@@ -104,23 +104,23 @@ There are many different code profilers that exist.  Some of them are c-profiler
   print(log_file_write_path)
 
   # add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
-  globals, function_results, nb_class_results, python_class_results = add_timer_to_all_functions(globals(), log_file_path):
+  globals, function_results, nb_class_results, python_class_results = add_timer_to_all_functions(globals(), log_file_write_path)
   print(f"standalone decorated functions: {function_results}")
   print(f"notebook class decorated functions: {nb_class_results}")
   print(f"python file class decorated functions: {python_class_results}")
   ```
 
-- Step 4: After the main program code executes add the following lines to the end of your '__main.py__' to join all the code profiler data log files together in Spark dataframe and write the results to a Unity Catalog Delta table.
+- Step 4: After the main program code executes add the following lines to the end of your '__main.py__' to join all the code profiler data log text files together in Spark dataframe and write the results to a Unity Catalog Delta table.
 
   ```python
   write_all_code_profiling_logs_and_create_delta_table(
       spark = spark,
       global_thread_queue_dict = global_thread_queue_dict, # DO NOT MODIFY
-      mqueue_batch_size = mqueue_batch_size, 
+      mqueue_batch_size = mqueue_batch_size, # DO NOT MODIFY
       catalog = "hive_metastore", # MODIFY
       schema = "default", # MODIFY
       table_name = "code_profiler_data", # MODIFY
-      overwrite_profiling_data = True, # MODIFY ()
+      overwrite_profiling_data = True, # MODIFY (true = overwrite table, false = append table)
       log_file_path = log_file_write_path # DO NOT MODIFY
   )
   ```
@@ -175,4 +175,5 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 - All of these local thread log text files are joined to together in one large Spark dataframe and written out to a Unity Catalog Delta table which can be queried to identify code execution performance bottlenecks.
 
-## How can I query the code profiler results from the Unity Catalog Delta table?  What standard queries exist to analyze performance bottlenecks?
+## How can I query the code profiler results from the Unity Catalog Delta table?
+
