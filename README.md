@@ -52,7 +52,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
   # step 3: set and keep track of the thead_local.depth by thread.  This is set one time, and each thread has its own thread_local.depth variable.
   if not hasattr(thread_local, 'depth'):
     thread_local.depth = 0
-  # step 4: when the @timet decorator is called we increment the thread_local.depth by 1.
+  # step 4: when the @timer decorator is called we increment the thread_local.depth by 1.
   thread_local.depth += 1
 
   # step 5: when the @timer decorator call finishes we decrement the thread_local.depth by 1, 
