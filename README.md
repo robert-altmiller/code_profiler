@@ -211,7 +211,6 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
     ![code_profiler_unit_tests_organization.png](/code_profiler/readme_images/code_profiler_unit_tests_organization.png)
 
-- When you run a unit test notebook here is how to verify if the unit test completed successfully in your IDE or in Databricks.
-
+- When you run a unit test notebook here is how to verify if the unit test completed successfully in your IDE or in Databricks.  All three unit tests will produce exactly the same result when run.
 
     ![unit_test_local_run_results.png](/code_profiler/readme_images/unit_test_local_run_results.png)
