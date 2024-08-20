@@ -215,7 +215,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
     ![code_profiler_unit_tests.png](/code_profiler/readme_images/code_profiler_unit_tests.png)
 
-- Here is the location of the unit testing notebooks, and the standalone Python functions and class functions used by the code profiler unit tests: '__code_profiler_test_nb.py__', '__code_profiler_test_py_file_nb.py__', and '__code_profiler_test_py_files.py__'
+- Here is the location of the unit testing notebooks, and the standalone Python functions and class functions used by the code profiler unit tests: '__code_profiler_test_nb.py__', '__code_profiler_test_py_files_nb.py__', and '__code_profiler_test_py_files.py__'
 
     ![code_profiler_unit_tests_organization.png](/code_profiler/readme_images/code_profiler_unit_tests_organization.png)
 
