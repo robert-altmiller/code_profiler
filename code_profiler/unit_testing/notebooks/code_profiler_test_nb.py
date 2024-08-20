@@ -23,6 +23,7 @@ else:
     from code_profiler.initialize.unit_test.test_class_nb import *
 # Change the log_file_write_path
 log_file_write_path = "./code_profiling/code_profiler_unit_test_nb"
+
 # Check if the path exists
 if os.path.exists(log_file_write_path):
     # Delete the directory and all its contents
@@ -79,4 +80,5 @@ log_message_df = write_all_code_profiling_logs_and_create_delta_table(
     overwrite_profiling_data = True,
     log_file_path = log_file_write_path
 )
+print(f"log_message_df count: {log_message_df.count()}")
 log_message_df.show()
