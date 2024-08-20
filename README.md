@@ -102,6 +102,10 @@ There are many different code profilers that exist.  Some of them are c-profiler
   
   # update the log_file_write_path environment variable
   log_file_write_path = f"/Workspace/Users/robert.altmiller@databricks.com/code_profiling/{unique_app_id}/{datetime.now().date()}"
+  # Check if the path exists
+  if os.path.exists(log_file_write_path):
+      # Delete the directory and all its contents
+      shutil.rmtree(log_file_write_path)
   print(log_file_write_path)
 
   # add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
