@@ -211,7 +211,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 - There are 3 different unit tests that can be run locally or in Databricks to test out the code profiler execution and profiling data results.  If you run these unit tests locally in an integrated development environment (IDE) the code profiler data log text files will be created locally, and a Spark dataframe will be created that joins all the results from all the code profiling log data text files.  A persisted Delta table will __NOT__ be created in Databricks Unity Catalog (UC).  You can find the unit tests in the following location.  
 
-- IMPORTANT: When executing the unit tests in Databricks make sure you __DETATCH AND REATTACH TO THE CLUSTER__ each time you re-run the code.  If you do not you will decorate the standalone Python functions and class functions more than once with the @timer decorator.  This is not an issue when running the unit tests in a local IDE environment.
+- __IMPORTANT__: When executing the unit tests in Databricks make sure you __DETATCH AND REATTACH TO THE CLUSTER__ each time you re-run the code.  If you do not you will decorate the standalone Python functions and class functions more than once with the @timer decorator.  This is not an issue when running the unit tests in a local IDE environment.
 
     ![code_profiler_unit_tests.png](/code_profiler/readme_images/code_profiler_unit_tests.png)
 
