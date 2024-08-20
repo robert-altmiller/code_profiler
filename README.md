@@ -105,7 +105,8 @@ There are many different code profilers that exist.  Some of them are c-profiler
   print(log_file_write_path)
 
   # add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
-  globals, function_results, nb_class_results, python_class_results = add_timer_to_all_functions(globals(), log_file_write_path)
+  original_globals = globals()
+  current_globals, function_results, nb_class_results, python_class_results = add_timer_to_all_functions(original_globals, log_file_write_path)
   print(f"standalone decorated functions: {function_results}")
   print(f"notebook class decorated functions: {nb_class_results}")
   print(f"python file class decorated functions: {python_class_results}")
