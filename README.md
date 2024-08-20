@@ -2,7 +2,7 @@
 
 ## Single or Multi-threaded Code Profiling Using Python Timer() Class Function Decorators and Globals() Namespace<br><br>
 
-There are many different code profilers that exist.  Some of them are c-profiler, scalene, memory_profiler, py-spy, and yappi.  
+There are many different code profilers that exist.  Some of them are c-profile, scalene, memory_profiler, py-spy, and yappi.  
 
   ![other_profilers.png](/code_profiler/readme_images/other_profilers.png)
 
@@ -80,7 +80,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ![env_vars.png](/code_profiler/readme_images/env_vars.png)
 
--   If you set the '__print_recursion_limit__' to true the dynamic recursion limit will print each time the @timer decorators is called by a thread.  This code below is in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.
+-   If you set the '__print_recursion_limit__' to true, the dynamic recursion limit will print each time the @timer decorators is called by a thread.  This code below is in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.
   
     ```python
     if print_recursion_limit == True: # print the recursion limit within a running thread
