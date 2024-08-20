@@ -98,7 +98,7 @@ There are many different code profilers that exist.  Some of them are c-profile,
 
     ![copy_code_profiler_folder.png](/code_profiler/readme_images/copy_code_profiler_folder.png)
 
-- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following lines to import the environment variables and code_profiler modules, and also decorate all in-scope Python functions.  Make sure to _update the email_ in the '__log_file_write_path__' below to match your Databricks workspace requirements.
+- Step 3: Open your '__main.py__' program for loading all your Python imports and executing your code.  Make sure all the imports run first, and then add the following lines to import the environment variables and code_profiler modules, and decorate all in-scope Python functions.  Make sure to _update the email_ in the '__log_file_write_path__' below to match your Databricks workspace requirements.
 
   ```python
   # all custom and standard library imports need to execute first....
@@ -183,7 +183,7 @@ There are many different code profilers that exist.  Some of them are c-profile,
           thread.join()
   ```
 
-- All of these local thread log text files are joined to together in one large Spark dataframe and written out to a Unity Catalog Delta table which can be queried to identify code execution performance bottlenecks.
+- All these local thread log text files are joined to together in one large Spark dataframe and written out to a Unity Catalog Delta table which can be queried to identify code execution performance bottlenecks.
 
 ## How to query the code profiler results from the Unity Catalog Delta table?
 
