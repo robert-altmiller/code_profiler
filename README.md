@@ -211,13 +211,14 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 - There are 3 different unit tests that can be run locally or in Databricks to test out the code profiler execution and profiling data results.  If you run these unit tests locally in an integrated development environment (IDE) the code profiler data log text files will be created locally, and a Spark dataframe will be created that joins all the results from all the code profiling log data text files.  A persisted Delta table will __NOT__ be created in Databricks Unity Catalog (UC).  You can find the unit tests in the following location.  
 
-    ![code_profiler_unit_tests.png](/code_profiler/readme_images/code_profiler_unit_tests.png)
-- In the image above
+- IMPORTANT: When executing the unit tests in Databricks make sure you __DETATCH AND REATTACH TO THE CLUSTER__ each time you re-run the code.  If you do not you will decorate the standalone Python functions and class functions more than once with the @timer decorator.  This is not an issue when running the unit tests in a local IDE environment.
 
-- Here is the location of the unit test notebooks, and the standalone Python functions and class functions used by the code profiler unit tests in the previous image: code_profiler_test_nb.py, code_profiler_test_py_file_nb.py, and code_profiler_test_py_files.py.
+    ![code_profiler_unit_tests.png](/code_profiler/readme_images/code_profiler_unit_tests.png)
+
+- Here is the location of the unit test notebooks, and the standalone Python functions and class functions used by the code profiler unit tests: '__code_profiler_test_nb.py__', '__code_profiler_test_py_file_nb.py__', and '__code_profiler_test_py_files.py__'
 
     ![code_profiler_unit_tests_organization.png](/code_profiler/readme_images/code_profiler_unit_tests_organization.png)
 
-- When you run a unit test notebook here is how to verify if the unit test completed successfully in your IDE or in Databricks.  All three unit tests will produce exactly the same result when run.
+- When you run a unit test notebook here is how to verify if the unit test completed successfully in your IDE or in Databricks.  All three unit tests will produce a similar resulting dataset.
 
     ![unit_test_local_run_results.png](/code_profiler/readme_images/unit_test_local_run_results.png)
