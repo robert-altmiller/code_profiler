@@ -11,12 +11,11 @@ from code_profiler.initialize.unit_test.test_class import *
 # COMMAND ----------
 
 # DBTITLE 1,Check if running locally in Databricks and set the log_file_write_path
-if is_running_in_databricks == True:
+if is_running_in_databricks() == True:
     # Clear the widgets
     dbutils.widgets.removeAll()
-    # Change the log_file_write_path
-    log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/code_profiling/code_profiler_unit_test_py_files_in_nb"
-else: log_file_write_path = "./code_profiling/code_profiler_unit_test_py_files_in_nb"
+# Change the log_file_write_path
+log_file_write_path = "./code_profiling/code_profiler_unit_test_py_files_in_nb"
 print(log_file_write_path)
 
 # COMMAND ----------

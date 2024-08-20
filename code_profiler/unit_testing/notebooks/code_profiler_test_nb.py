@@ -15,14 +15,14 @@ from code_profiler.main import *
 # COMMAND ----------
 
 # DBTITLE 1,Check if running locally in Databricks and set the log_file_write_path
-if is_running_in_databricks == True:
+if is_running_in_databricks() == True:
     # Clear the widgets
     dbutils.widgets.removeAll()
-    log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/code_profiling/code_profiler_unit_test_nb"
 else: 
     from code_profiler.initialize.unit_test.test_functions_nb import *
     from code_profiler.initialize.unit_test.test_class_nb import *
-    log_file_write_path = "./code_profiling/code_profiler_unit_test_nb"
+# Change the log_file_write_path
+log_file_write_path = "./code_profiling/code_profiler_unit_test_nb"
 print(log_file_write_path)
 
 # COMMAND ----------

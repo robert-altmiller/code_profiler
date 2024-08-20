@@ -5,12 +5,11 @@ from code_profiler.initialize.unit_test.test_class import *
 
 
 # Change the log_file_write_path
-if is_running_in_databricks == True:
+if is_running_in_databricks() == True:
     # Clear the widgets
     dbutils.widgets.removeAll()
-    # Change the log_file_write_path
-    log_file_write_path = "/Workspace/Users/robert.altmiller@databricks.com/code_profiling/code_profiler_test_py_files_in_python_file"
-else: log_file_write_path = "./code_profiling/code_profiler_test_py_files_in_python_file"
+# Change the log_file_write_path
+log_file_write_path = "./code_profiling/code_profiler_test_py_files_in_python_file"
 print(log_file_write_path)
 
 

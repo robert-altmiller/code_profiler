@@ -31,9 +31,10 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ## How is this code profiler different from other code profilers?
 
-- The timer() code profiling Python decorator is for standalone Python functions, Databricks notebook class functions, and Python file class functions.  It can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  We initially decorated the functions and class functions _manually_ with the @timer decorator but this was cumbersome for very large codebases.
-- It is important that we do not decorate standard library functions such as those found in the pyspark Python library. We added functions to filter out standard library functions so they do not get decorated with the @timer Python decorator.
-- We added automation to add the timer() decorator to all standalone Python functions and class functions and also update the globals() dictionary namespace with the newly decorated functions.  
+- The @timer code profiling Python decorator is for standalone Python functions, Databricks notebook class functions, and Python file class functions.  It can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  We initially decorated the functions and class functions _manually_ with the @timer decorator but this was cumbersome for very large codebases.
+- It is important that we do not decorate standard library functions such as those found in the pyspark or pandas Python libraries. We added Python functions to filter out standard library functions so they do not get decorated with the @timer Python decorator.
+- We added automation to add the @timer decorator to all standalone Python functions and class functions and also update the globals() dictionary namespace with the newly decorated functions.
+- The code profiler can profile code bases and frameworks which run as a single thread or multi-threaded.
 - The sections in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) to pay attention to are the follwing:
   
   - __Code Profling timer() Decorator Function__
@@ -203,9 +204,10 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
 ## How to run a code_profiler unit test to test how it works and check the results?
 
-- There are 3 different unit test that can be run locally or in Databricks to test out the code profiler execution.  If you run these unit tests locally in an integrated development environment (IDE) local code profiler data log text files will be created and a Spark dataframe will be created that has all the results from the code profiling log data text files.  A persisted Delta table will __NOT__ be created in Databricks Unity Catalog (UC).  You can find the unit tests in the following location:
+- There are 3 different unit tests that can be run locally or in Databricks to test out the code profiler execution and profiling data results.  If you run these unit tests locally in an integrated development environment (IDE) the code profiler data log text files will be created locally and a Spark dataframe will be created that joins all the results from the code profiling log data text files.  A persisted Delta table will __NOT__ be created in Databricks Unity Catalog (UC).  You can find the unit tests in the following location.  
 
     ![code_profiler_unit_tests.png](/code_profiler/readme_images/code_profiler_unit_tests.png)
+- In the image above
 
 - Here is the location of the unit test notebooks, and the standalone Python functions and class functions used by the code profiler unit tests.
 
