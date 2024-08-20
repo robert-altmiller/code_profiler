@@ -31,7 +31,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
 
   ## How is this code profiler different from other code profilers?
 
-- The @timer code profiling Python decorator is for standalone Python functions, Databricks notebook class functions, and Python file class functions.  It can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  We initially decorated the functions and class functions _manually_ with the @timer decorator but this was cumbersome for very large codebases and frameworks
+- The @timer code profiling Python decorator is for standalone Python functions, Databricks notebook class functions, and Python file class functions.  It can be found in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  We initially decorated the functions and class functions _manually_ with the @timer decorator but this was cumbersome for very large codebases and frameworks.
 - It is important that we do not decorate standard library functions such as those found in the pyspark or pandas Python libraries so we added Python functions to filter out standard library functions so they do not get decorated with the @timer Python decorator.
 - We added automation to add the @timer decorator to all standalone Python functions and class functions and also update the globals() dictionary namespace with the newly decorated functions.
 - The code profiler can profile code bases and frameworks which run in single or multi-threaded environment.
