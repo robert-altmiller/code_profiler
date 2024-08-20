@@ -47,7 +47,7 @@ There are many different code profilers that exist.  Some of them are c-profiler
   - __Apply Timer Code Profiling Function to all Standalone Functions__
   - __Create Delta Table From Code Profiling Log Files__
 
-- When running the code profiler against large code bases that use deep recursion (e.g. complex json payload flatteners) it is important to dynamically contol the recursion limit to prevent out of memory errors during code profiler execution.  This is accomplished directly in the timer() Python function in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  The __'original_recursion_limit'__ is set in the [env-vars.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/env_vars.py) Python file.  See explanation below for how we dynamically control the recursion limit.
+- When running the code profiler against large code bases that use deep recursion (e.g. complex json payload flatteners) it is important to dynamically control the recursion limit to prevent out of memory errors during code profiler execution.  This is accomplished directly in the timer() Python function in the [profiler_tools.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/profiler_tools.py) Python file.  The __'original_recursion_limit'__ is set in the [env-vars.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/env_vars.py) Python file.  See explanation below for how we dynamically control the recursion limit.
 
   ```python
   # step 1: original_recursion_limit is set in the env_vars.py file.
