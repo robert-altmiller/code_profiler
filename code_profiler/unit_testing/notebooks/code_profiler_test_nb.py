@@ -29,13 +29,14 @@ print(log_file_write_path)
 
 # DBTITLE 1,Apply Timer() Decorator to All Standalone Python Functions
 # Example usage: Call these functions after all imports
-globals, function_results = apply_timer_decorator_to_all_python_functions(globals(), log_file_path = log_file_write_path) # python standalone functions 
+original_globals = globals()
+current_globals, function_results = apply_timer_decorator_to_all_python_functions(original_globals, log_file_path = log_file_write_path) # python standalone functions 
 
 # COMMAND ----------
 
 # DBTITLE 1,Add Timer Decorator to All Notebook Class Functions
 # Example usage: Call these functions after all imports
-globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(globals, python_class_scopes, log_file_path = log_file_write_path) # notebook class functions
+current_globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(current_globals, python_class_scopes, log_file_path = log_file_write_path) # notebook class functions
 
 # COMMAND ----------
 

@@ -14,8 +14,9 @@ print(log_file_write_path)
 
 
 # Example usage: Call these functions after all imports
-globals, functions_results = apply_timer_decorator_to_all_python_functions(globals(), log_file_path = log_file_write_path) # python standalone functions 
-globals, python_class_results = apply_timer_decorator_to_all_python_class_functions(globals, python_class_and_fxns_scopes_unittesting, log_file_path = log_file_write_path) # python class functions
+original_globals = globals()
+current_globals, functions_results = apply_timer_decorator_to_all_python_functions(original_globals, log_file_path = log_file_write_path) # python standalone functions 
+current_globals, python_class_results = apply_timer_decorator_to_all_python_class_functions(current_globals, python_class_and_fxns_scopes_unittesting, log_file_path = log_file_write_path) # python class functions
 
 
 # Class usage example:
