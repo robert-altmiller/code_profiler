@@ -16,6 +16,10 @@ if is_running_in_databricks() == True:
     dbutils.widgets.removeAll()
 # Change the log_file_write_path
 log_file_write_path = "./code_profiling/code_profiler_unit_test_py_files_in_nb"
+# Check if the path exists
+if os.path.exists(log_file_write_path):
+    # Delete the directory and all its contents
+    shutil.rmtree(log_file_write_path)
 print(log_file_write_path)
 
 # COMMAND ----------
