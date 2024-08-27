@@ -92,7 +92,7 @@ There are many different code profilers that exist.  Some of them are c-profile,
 
 - Step 1: Clone down the [code_profiler](https://github.com/robert-altmiller/code_profiler) Github repository into a Databricks workspace.
 
-    ![clone_repo.png](/code_profiler/readme_images/clone_repo.png)
+    ![clone_repo_in_databricks.png](/code_profiler/readme_images/clone_repo_in_databricks.png)
 
 - Step 2: Click into the '__code_profiler__' cloned repo, and copy or move the _second level_ '__code_profiler__' folder as a root level folder in your Python framework, project, or code base.
 
