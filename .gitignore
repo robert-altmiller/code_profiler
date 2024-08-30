@@ -162,5 +162,5 @@ cython_debug/
 #.idea/
 
 # Code profiler log files
-/unit_testing/notebooks/code_profiling*
-/unit_testing/python/code_profiling*
+/unit_testing/notebooks/code_profiling
+/unit_testing/python/code_profiling
