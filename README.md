@@ -232,4 +232,4 @@ There are many different code profilers that exist.  Some of them are c-profile,
 
 ## Code profiler version updates
 
-- 8/29/2024 - We record the 'getrecursionlimit()' in the profiler_tools.py when each timer() decorated function is called.  When we create the final Delta table of consolidated code profiling results 'recursion_limit' is a new column which has been added.
+- 8/29/2024 - We record the 'getrecursionlimit()' in the profiler_tools.py when each timer() decorated function is called.  When we create the final Delta table of consolidated code profiling results 'recursion_limit' is a new column which has been added.  Tested changes in local IDE and in Databricks.
