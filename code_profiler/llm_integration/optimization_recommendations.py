@@ -1,7 +1,6 @@
 # library imports
 import inspect
 
-
 # get function code
 def get_function_code(globals, class_name=None, function_name=None):
     """
