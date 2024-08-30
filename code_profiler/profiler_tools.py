@@ -1,4 +1,5 @@
 from code_profiler.env_vars import *
+from code_profiler.llm_integration.optimization_recommendations import *
 
 def iterate_queue(q):
     """helper function to iterate over the queue"""
