@@ -29,7 +29,7 @@ print(log_file_write_path)
 # Example usage: Call these functions after all imports
 original_globals = globals()
 current_globals, function_results = apply_timer_decorator_to_all_python_functions(original_globals, log_file_path = log_file_write_path) # python standalone functions 
-print(f"\ndecorated standalone functions: {function_results}")
+print(f"\ndecorated standalone functions: {function_results}\n")
 
 # COMMAND ----------
 

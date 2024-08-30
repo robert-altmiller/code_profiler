@@ -36,14 +36,15 @@ print(log_file_write_path)
 # Example usage: Call these functions after all imports
 original_globals = globals()
 current_globals, function_results = apply_timer_decorator_to_all_python_functions(original_globals, log_file_path = log_file_write_path) # python standalone functions 
-print(f"\ndecorated_standalone_functions: {function_results}")
+print(f"\ndecorated_standalone_functions: {function_results}\n")
 
 # COMMAND ----------
 
 # DBTITLE 1,Add Timer Decorator to All Notebook Class Functions
 # Example usage: Call these functions after all imports
-current_globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(current_globals, python_class_scopes, log_file_path = log_file_write_path) # notebook class functions
+current_globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(current_globals, python_class_and_fxns_scopes_unittesting, log_file_path = log_file_write_path) # notebook class functions
 print(f"\ndecorated notebook class functions: {nb_class_results}\n")
+
 # COMMAND ----------
 
 # DBTITLE 1,Testing Class for Timer Decorator Call
