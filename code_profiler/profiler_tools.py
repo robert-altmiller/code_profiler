@@ -94,6 +94,7 @@ def timer(log_file_path):
                     "end_time": str(datetime.fromtimestamp(end_time)),
                     "memory_usage_bytes": end_mem - start_mem,
                     "cpu_usage_percent": end_cpu - start_cpu,
+                    "recursion_limit": sys.getrecursionlimit(),
                     "arguments": args_details,
                     "kwargs": kwargs_details,
                     "return_value": str(result)
@@ -346,6 +347,7 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         StructField("end_time", StringType(), True),
         StructField("memory_usage_bytes", StringType(), True),
         StructField("cpu_usage_percent", StringType(), True),
+        StructField("recursion_limit",StringType(), True),
         StructField("arguments", StringType(), True),
         StructField("kwargs", StringType(), True),
         StructField("return_value", StringType(), True)

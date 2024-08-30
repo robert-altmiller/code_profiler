@@ -228,3 +228,8 @@ There are many different code profilers that exist.  Some of them are c-profile,
 - When you run a unit test notebook here is how to verify if the unit test completed successfully in your IDE or in Databricks.  All three unit tests will produce a similar resulting dataset.
 
     ![unit_test_local_run_results.png](/code_profiler/readme_images/unit_test_local_run_results.png)
+
+
+## Code profiler version updates
+
+- 8/29/2024 - We record the 'getrecursionlimit()' in the profiler_tools.py with each timer() decorated function.  When we create the final Delta table of consolidated code profiling results 'recursion_limit' is a new column which has been added.
