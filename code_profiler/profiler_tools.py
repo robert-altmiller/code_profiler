@@ -1,5 +1,5 @@
 from code_profiler.env_vars import *
-from code_profiler.llm_integration.optimization_recommendations import *
+from code_profiler.llm_integration.optimization_recs import *
 
 def iterate_queue(q):
     """helper function to iterate over the queue"""
@@ -64,6 +64,14 @@ def timer(log_file_path):
             if thread_id not in global_thread_queue_dict.keys():
                 global_thread_queue_dict[thread_id] = queue.Queue()
 
+            # Capture class name if it exists
+            class_name = None
+            if args and hasattr(args[0], "__class__"):
+                class_name = args[0].__class__.__name__
+                if class_name in builtin_types: # Then its not a class function
+                    class_name = "Standalone_Function" 
+            else: class_name = ""
+
             try:
                 if print_recursion_limit == True:
                     print(f"function_name: {func.__name__}()")
@@ -84,11 +92,17 @@ def timer(log_file_path):
                 args_details = ',XSEPX,'.join([str(arg) for arg in args]) # create a detailed string of all positional arguments  
                 kwargs_details = ',XSEPX,'.join([f"{k}={v}" for k, v in kwargs.items()])  # create a detailed string of all keyword arguments
 
+                # Capture the source code of the function
+                source_code = inspect.getsource(func)
+                # Create an MD5 hash of the source code
+                source_code_md5_hash = hashlib.md5(source_code.encode()).hexdigest()
+
                 log_message_dict = {
                     "ingestion_date": timestamp,
                     "thread_id": thread_id,
                     "process_id": pid,
                     "unique_app_id": str(unique_app_id),
+                    "class_name": class_name,
                     "function_name": f"{func.__name__}()",
                     "execution_time": f"{execution_time:.6f}",
                     "start_time": str(datetime.fromtimestamp(start_time)),
@@ -98,7 +112,9 @@ def timer(log_file_path):
                     "recursion_limit": sys.getrecursionlimit(),
                     "arguments": args_details,
                     "kwargs": kwargs_details,
-                    "return_value": str(result)
+                    "return_value": str(result),
+                    "source_code": source_code,
+                    "source_code_md5_hash": source_code_md5_hash
                 }
                 return result  # Return the original result
 
@@ -342,6 +358,7 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         StructField("thread_id", StringType(), True),
         StructField("process_id", StringType(), True),
         StructField("unique_app_id", StringType(), True),
+        StructField("class_name", StringType(), True),
         StructField("function_name", StringType(), True),
         StructField("execution_time", StringType(), True),
         StructField("start_time", StringType(), True),
@@ -351,7 +368,9 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         StructField("recursion_limit",StringType(), True),
         StructField("arguments", StringType(), True),
         StructField("kwargs", StringType(), True),
-        StructField("return_value", StringType(), True)
+        StructField("return_value", StringType(), True),
+        StructField("source_code", StringType(), True),
+        StructField("source_code_md5_hash", StringType(), True)
     ])
 
     # create DataFrame from the list of Python dictionaries and the schema

@@ -1,5 +1,8 @@
 # library imports
-import inspect
+import inspect, json
+from openai import OpenAI
+
+
 
 # get function code
 def get_function_code(globals, class_name=None, function_name=None):
@@ -37,3 +40,22 @@ def get_function_code(globals, class_name=None, function_name=None):
     except Exception as e:
         # Catch-all for any other exceptions
         raise RuntimeError(f"An unexpected error occurred: {e}")
+    
+
+# Next we will configure the OpenAI SDK with Databricks Access Token and our base URL
+def get_llm_model_response(my_api_key, my_base_url, my_system_prompt, my_user_prompt, my_model):
+  # Now let's invoke inference against the PAYGO (Pay Per Token) endpoint
+  response = OpenAI(api_key = my_api_key, base_url = my_base_url).chat.completions.create(
+      model = my_model,
+      messages=[
+        {
+          "role": "system", 
+          "content": my_system_prompt 
+        },
+        {
+          "role": "user",
+          "content": my_user_prompt
+        }
+      ]
+  )
+  return json.loads(response.json())["choices"][0]["message"]["content"]

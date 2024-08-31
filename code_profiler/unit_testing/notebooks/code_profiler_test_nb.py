@@ -98,4 +98,6 @@ log_message_df = write_all_code_profiling_logs_and_create_delta_table(
     log_file_path = log_file_write_path
 )
 print(f"log_message_df count: {log_message_df.count()}")
-log_message_df.show()
+log_message_df_pandas = log_message_df.toPandas()
+log_message_df_pandas.to_csv(f"{log_file_write_path}/log_message_df_pandas.csv", index=False, header = True)
+print(log_message_df_pandas.head())

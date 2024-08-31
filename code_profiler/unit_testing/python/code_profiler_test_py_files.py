@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/Users/robert.altmiller/repos/projects/github/code_profiler/code_profiler')
+
 # Library Imports
 from code_profiler.main import *
 from code_profiler.initialize.unit_test.test_functions import *
@@ -51,19 +54,6 @@ print("Max in list [1, 99, 34, 56]:", max_in_list([1, 99, 34, 56]))
 print("\n")
 
 
-# Get function optimization recommendation from LLM (e.g. standalone functions)
-for fxn_name in function_results:
-    source_code = get_function_code(current_globals, function_name = fxn_name)
-    print(f"\n{fxn_name}():\n{source_code}\n")
-
-
-# Get function optimization recommendation from LLM (e.g. class functions)
-for cls_fxn_name in python_class_results:
-    cls_name, fxn_name = cls_fxn_name.split('.')
-    source_code = get_function_code(current_globals, class_name = cls_name, function_name = fxn_name)
-    print(f"\n{cls_name}.{fxn_name}():\n{source_code}\n")
-
-
 # Create Code Profiling Logs and Write Code Profiling Results to Delta Table
 log_message_df = write_all_code_profiling_logs_and_create_delta_table(
     spark = spark,
@@ -76,4 +66,21 @@ log_message_df = write_all_code_profiling_logs_and_create_delta_table(
     log_file_path = log_file_write_path
 )
 print(f"log_message_df count: {log_message_df.count()}")
-log_message_df.show()
+log_message_df_pandas = log_message_df.toPandas()
+log_message_df_pandas.to_csv(f"{log_file_write_path}/log_message_df_pandas.csv", index=False, header = True)
+print(log_message_df_pandas.head())
+
+# Get function optimization recommendation from LLM (e.g. standalone functions)
+# for fxn_name in function_results:
+#     source_code = get_function_code(current_globals, function_name = fxn_name)
+#     print(f"\n{fxn_name}():\n{source_code}\n")
+
+
+# # Get function optimization recommendation from LLM (e.g. class functions)
+# for cls_fxn_name in python_class_results:
+#     cls_name, fxn_name = cls_fxn_name.split('.')
+#     source_code = get_function_code(current_globals, class_name = cls_name, function_name = fxn_name)
+#     # Get large language model optimization recommendations
+#     optimization_recs_json = get_llm_model_response(my_api_key, endpoint_url, my_system_prompt, source_code, my_model = meta_llama_31_70b_instruct_model)
+#     print(f"\n{cls_name}.{fxn_name}():\n{source_code}\n")
+#     print(optimization_recs_json)
