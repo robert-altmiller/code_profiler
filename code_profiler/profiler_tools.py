@@ -51,6 +51,7 @@ def timer(log_file_path):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
+            import base64 # this has to be included here (DO NOT MODIFY)
             sys.setrecursionlimit(sys.getrecursionlimit() + 1)
 
             if not hasattr(thread_local, 'depth'):
@@ -63,14 +64,6 @@ def timer(log_file_path):
             thread_id = threading.get_ident()  # Get the current thread identifier
             if thread_id not in global_thread_queue_dict.keys():
                 global_thread_queue_dict[thread_id] = queue.Queue()
-
-            # Capture class name if it exists
-            class_name = None
-            if args and hasattr(args[0], "__class__"):
-                class_name = args[0].__class__.__name__
-                if class_name in builtin_types: # Then its not a class function
-                    class_name = "Standalone_Function" 
-            else: class_name = ""
 
             try:
                 if print_recursion_limit == True:
@@ -92,11 +85,21 @@ def timer(log_file_path):
                 args_details = ',XSEPX,'.join([str(arg) for arg in args]) # create a detailed string of all positional arguments  
                 kwargs_details = ',XSEPX,'.join([f"{k}={v}" for k, v in kwargs.items()])  # create a detailed string of all keyword arguments
 
-                # Capture the source code of the function
-                source_code = inspect.getsource(func)
+                # Capture class name if it exists
+                if inspect.ismethod(func) or inspect.isfunction(func):
+                    class_name = func.__qualname__.split('.')[0]
+                    if class_name == func.__name__:
+                        class_name = "Standalone_Function"
+
+                # Capture the source code of the function and compress it using zlib and base64
+                source_code = str(inspect.getsource(func))
+                source_code_compressed = zlib.compress(source_code.encode('utf-8'))
+                source_code_compressed = base64.b64encode(source_code_compressed).decode('utf-8')
                 # Create an MD5 hash of the source code
                 source_code_md5_hash = hashlib.md5(source_code.encode()).hexdigest()
 
+                log_message_dict = {}
+                
                 log_message_dict = {
                     "ingestion_date": timestamp,
                     "thread_id": thread_id,
@@ -113,7 +116,7 @@ def timer(log_file_path):
                     "arguments": args_details,
                     "kwargs": kwargs_details,
                     "return_value": str(result),
-                    "source_code": source_code,
+                    "source_code_compressed": source_code_compressed,
                     "source_code_md5_hash": source_code_md5_hash
                 }
                 return result  # Return the original result
@@ -369,7 +372,7 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         StructField("arguments", StringType(), True),
         StructField("kwargs", StringType(), True),
         StructField("return_value", StringType(), True),
-        StructField("source_code", StringType(), True),
+        StructField("source_code_compressed", StringType(), True),
         StructField("source_code_md5_hash", StringType(), True)
     ])
 

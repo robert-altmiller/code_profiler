@@ -64,21 +64,6 @@ print("Max in list [1, 99, 34, 56]:", max_in_list([1, 99, 34, 56]))
 
 # COMMAND ----------
 
-# DBTITLE 1,Get Python Function Code for LLM Code Optimization Analysis
-
-# Get function optimization recommendation from LLM (e.g. standalone functions)
-for fxn_name in function_results:
-    source_code = get_function_code(current_globals, function_name = fxn_name)
-    print(f"\n{fxn_name}():\n{source_code}\n")
-
-# Get function optimization recommendation from LLM (e.g. class functions)
-for cls_fxn_name in python_class_results:
-    cls_name, fxn_name = cls_fxn_name.split('.')
-    source_code = get_function_code(current_globals, class_name = cls_name, function_name = fxn_name)
-    print(f"\n{cls_name}.{fxn_name}():\n{source_code}\n")
-
-# COMMAND ----------
-
 # DBTITLE 1,Create Code Profiling Logs and Write Code Profiling Results to Delta Table
 log_message_df = write_all_code_profiling_logs_and_create_delta_table(
     spark = spark,

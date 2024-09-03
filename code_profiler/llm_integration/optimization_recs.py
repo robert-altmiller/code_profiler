@@ -59,3 +59,20 @@ def get_llm_model_response(my_api_key, my_base_url, my_system_prompt, my_user_pr
       ]
   )
   return json.loads(response.json())["choices"][0]["message"]["content"]
+
+# how to use this Python code in each of the unit_testing notebooks:
+
+# Get function optimization recommendation from LLM (e.g. standalone functions)
+# for fxn_name in function_results:
+#     source_code = get_function_code(current_globals, function_name = fxn_name)
+#     print(f"\n{fxn_name}():\n{source_code}\n")
+
+
+# # Get function optimization recommendation from LLM (e.g. class functions)
+# for cls_fxn_name in python_class_results:
+#     cls_name, fxn_name = cls_fxn_name.split('.')
+#     source_code = get_function_code(current_globals, class_name = cls_name, function_name = fxn_name)
+#     # Get large language model optimization recommendations
+#     optimization_recs_json = get_llm_model_response(my_api_key, endpoint_url, my_system_prompt, source_code, my_model = meta_llama_31_70b_instruct_model)
+#     print(f"\n{cls_name}.{fxn_name}():\n{source_code}\n")
+#     print(optimization_recs_json)

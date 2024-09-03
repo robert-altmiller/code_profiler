@@ -1,3 +1,7 @@
+import sys
+sys.path.append('/Users/robert.altmiller/repos/projects/github/code_profiler')
+
+
 # Databricks notebook source
 # DBTITLE 1,Import the Python Code Profiler
 from code_profiler.main import *
@@ -68,21 +72,6 @@ print("Reversed string of 'hello':", reverse_string('hello'))
 print("Sum of list [1, 2, 3, 4]:", sum_of_list([1, 2, 3, 4]))
 print("Is 'radar' a palindrome?", is_palindrome('radar'))
 print("Max in list [1, 99, 34, 56]:", max_in_list([1, 99, 34, 56]))
-
-# COMMAND ----------
-
-# DBTITLE 1,Get Python Function Code for LLM Code Optimization Analysis
-
-# Get function optimization recommendation from LLM (e.g. standalone functions)
-for fxn_name in function_results:
-    source_code = get_function_code(current_globals, function_name = fxn_name)
-    print(f"\n{fxn_name}():\n{source_code}\n")
-
-# Get function optimization recommendation from LLM (e.g. class functions)
-for cls_fxn_name in nb_class_results:
-    cls_name, fxn_name = cls_fxn_name.split('.')
-    source_code = get_function_code(current_globals, class_name = cls_name, function_name = fxn_name)
-    print(f"\n{cls_name}.{fxn_name}():\n{source_code}\n")
 
 # COMMAND ----------
 

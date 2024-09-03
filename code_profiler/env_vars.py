@@ -1,5 +1,6 @@
 # library imports
-import builtins, glob, hashlib, importlib, inspect, json, os, psutil, queue, shutil, sys, threading, time, types
+import builtins, glob, hashlib, importlib, inspect, json
+import os, psutil, queue, shutil, sys, threading, time, types, zlib
 from datetime import datetime
 from pyspark.sql.types import *
 from pyspark.sql.functions import *

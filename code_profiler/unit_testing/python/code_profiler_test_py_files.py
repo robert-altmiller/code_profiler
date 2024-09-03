@@ -1,11 +1,11 @@
-import sys
-sys.path.append('/Users/robert.altmiller/repos/projects/github/code_profiler/code_profiler')
+import os, sys
+# Add the path to the code_profiler module
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
 
 # Library Imports
 from code_profiler.main import *
 from code_profiler.initialize.unit_test.test_functions import *
 from code_profiler.initialize.unit_test.test_class import *
-
 
 # Change the log_file_write_path
 if is_running_in_databricks() == True:
@@ -70,17 +70,23 @@ log_message_df_pandas = log_message_df.toPandas()
 log_message_df_pandas.to_csv(f"{log_file_write_path}/log_message_df_pandas.csv", index=False, header = True)
 print(log_message_df_pandas.head())
 
-# Get function optimization recommendation from LLM (e.g. standalone functions)
-# for fxn_name in function_results:
-#     source_code = get_function_code(current_globals, function_name = fxn_name)
-#     print(f"\n{fxn_name}():\n{source_code}\n")
+# # Get the top 5 records with the highest execution time and decode the source_code_compressed column
+# # Define UDF to decode the compressed source code
+# def decode_source_code(source_code_compressed):
+#     import base64
+#     # Decode from base64 to compressed bytes
+#     source_code_decompressed = base64.b64decode(source_code_compressed)
+#     # Decompress using zlib
+#     source_code_decompressed = zlib.decompress(source_code_decompressed).decode('utf-8')
+#     return source_code_decompressed
 
+# # Register the UDF
+# decode_source_code_udf = udf(decode_source_code, StringType())
 
-# # Get function optimization recommendation from LLM (e.g. class functions)
-# for cls_fxn_name in python_class_results:
-#     cls_name, fxn_name = cls_fxn_name.split('.')
-#     source_code = get_function_code(current_globals, class_name = cls_name, function_name = fxn_name)
-#     # Get large language model optimization recommendations
-#     optimization_recs_json = get_llm_model_response(my_api_key, endpoint_url, my_system_prompt, source_code, my_model = meta_llama_31_70b_instruct_model)
-#     print(f"\n{cls_name}.{fxn_name}():\n{source_code}\n")
-#     print(optimization_recs_json)
+# top_5_slowest_fxns_df = log_message_df \
+#     .orderBy(col("execution_time").desc()).limit(5) \
+#     .select("class_name", "function_name", "source_code_compressed")
+# top_5_slowest_fxns_df = top_5_slowest_fxns_df \
+#     .withColumn("source_code_decompressed", decode_source_code_udf(top_5_slowest_fxns_df["source_code_compressed"]))
+# top_5_slowest_fxns_df_pandas = top_5_slowest_fxns_df.toPandas()
+# print(top_5_slowest_fxns_df_pandas.head())
