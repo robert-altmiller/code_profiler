@@ -60,7 +60,7 @@ def get_llm_model_response(my_api_key, my_base_url, my_system_prompt, my_user_pr
   )
   return json.loads(response.json())["choices"][0]["message"]["content"]
 
-# how to use this Python code in each of the unit_testing notebooks:
+# how to use this Python code below in each of the unit_testing notebooks:
 
 # Get function optimization recommendation from LLM (e.g. standalone functions)
 # for fxn_name in function_results:
