@@ -1,62 +1,61 @@
 # Databricks notebook source
-# DBTITLE 1,Remove Databricks Widgets
-dbutils.widgets.removeAll()
+# DBTITLE 1,Remove All Widgets
+# MAGIC dbutils.widgets.removeAll()
 
 # COMMAND ----------
 
 # DBTITLE 1,Library Imports
-import glob, os, json, time, ast
-from datetime import datetime
-from pyspark.sql.types import *
-from pyspark.sql.functions import *
+# MAGIC import ast, glob, json os, time, zlib
+# MAGIC from datetime import datetime
+# MAGIC from pyspark.sql.types import *
+# MAGIC from pyspark.sql.functions import *
 
 # COMMAND ----------
 
 # DBTITLE 1,Local Parameters
-catalog = "hive_metastore" # update / change
-schema = "default" # update / change
-table_name = "code_profiler_ecdomain_local_run_largest_tenant_original"#code_profiler_local_run_largest_tenant" # update / change
-tenant_id = "5d856b7a_ab5d_4338_9401_0394dd1da677" # update / change
+# MAGIC catalog = "hive_metastore" # MODIFY
+# MAGIC schema = "default" # MODIFY
+# MAGIC table_name = "code_profiler_data" # MODIFY
+# MAGIC unqiue_app_id = "5d856b7a_ab5d_4338_9401_0394dd1da677" # MODIFY
 
 # COMMAND ----------
 
 # DBTITLE 1,Analyze Delta Table Code Profiler Results
 # read the code profiler data
-code_profiler_df = spark.sql(f"SELECT * FROM {catalog}.{schema}.{table_name}")
-display(code_profiler_df)
+# MAGIC code_profiler_df = spark.sql(f"SELECT * FROM {catalog}.{schema}.{table_name}")
+# MAGIC display(code_profiler_df)
 
 # COMMAND ----------
 
 # DBTITLE 1, Decode the 'source_code_compressed' column for the top 5 slowest runnign functions
 # Get the top 5 records with the highest execution time and decode the source_code_compressed column
 # Define UDF to decode the compressed source code
-def decode_source_code(source_code_compressed):
-    import base64
-    # Decode from base64 to compressed bytes
-    source_code_decompressed = base64.b64decode(source_code_compressed)
-    # Decompress using zlib
-    source_code_decompressed = zlib.decompress(source_code_decompressed).decode('utf-8')
-    return source_code_decompressed
+# MAGIC def decode_source_code(source_code_compressed):
+# MAGIC    import base64
+# MAGIC    # Decode from base64 to compressed bytes
+# MAGIC    source_code_decompressed = base64.b64decode(source_code_compressed)
+# MAGIC    # Decompress using zlib
+# MAGIC    source_code_decompressed = zlib.decompress(source_code_decompressed).decode('utf-8')
+# MAGIC    return source_code_decompressed
 
 # Register the UDF
-decode_source_code_udf = udf(decode_source_code, StringType())
+# MAGIC decode_source_code_udf = udf(decode_source_code, StringType())
 
-total_slow_running_fxns = 5
-top_5_slowest_fxns_df = log_message_df \
-    .orderBy(col("execution_time").desc()).limit(total_slow_running_fxns) \
-    .select("class_name", "function_name", "source_code_compressed")
-top_5_slowest_fxns_df = top_5_slowest_fxns_df \
-    .withColumn("source_code_decompressed", decode_source_code_udf(top_5_slowest_fxns_df["source_code_compressed"]))
-top_5_slowest_fxns_df_pandas = top_5_slowest_fxns_df.toPandas()
-print(top_5_slowest_fxns_df_pandas.head())
+# MAGIC total_slow_running_fxns = 5
+# MAGIC top_5_slowest_fxns_df = code_profiler_df \
+# MAGIC    .orderBy(col("execution_time").desc()).limit(total_slow_running_fxns) \
+# MAGIC    .select("class_name", "function_name", "source_code_compressed")
+# MAGIC top_5_slowest_fxns_df = top_5_slowest_fxns_df \
+# MAGIC    .withColumn("source_code_decompressed", decode_source_code_udf(top_5_slowest_fxns_df["source_code_compressed"]))
+# MAGIC display(top_5_slowest_fxns_df)
 
 # COMMAND ----------
 
 # DBTITLE 1,Sed Widgets to be Used With Databricks SQL
-dbutils.widgets.text("catalog_name", catalog, "Catalog Name")
-dbutils.widgets.text("schema_name", schema, "Schema Name")
-dbutils.widgets.text("table_name", table_name, "Table Name")
-dbutils.widgets.text("tenant_id", tenant_id, "Tenant ID")
+# MAGIC dbutils.widgets.text("catalog_name", catalog, "Catalog Name")
+# MAGIC dbutils.widgets.text("schema_name", schema, "Schema Name")
+# MAGIC dbutils.widgets.text("table_name", table_name, "Table Name")
+# MAGIC dbutils.widgets.text("tenant_id", tenant_id, "Tenant ID")
 
 # COMMAND ----------
 
@@ -235,6 +234,3 @@ dbutils.widgets.text("tenant_id", tenant_id, "Tenant ID")
 # MAGIC WHERE tenant_id = '5d856b7a_ab5d_4338_9401_0394dd1da677' and thread_id = '140634034013760'
 # MAGIC GROUP BY tenant_id, thread_id, function_name
 # MAGIC ORDER BY total_execution_time_hours DESC
-
-# COMMAND ----------
-
