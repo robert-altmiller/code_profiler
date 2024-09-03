@@ -3,7 +3,6 @@ import inspect, json
 from openai import OpenAI
 
 
-
 # get function code
 def get_function_code(globals, class_name=None, function_name=None):
     """
