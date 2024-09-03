@@ -103,12 +103,12 @@ dbutils.widgets.text("tenant_id", tenant_id, "Tenant ID")
 
 # %sql
 
-# SELECT tenant_id, thread_id, COUNT(DISTINCT(function_name)) as total_function_count,
-#       ROUND((SUM(execution_time)/60)/60, 4) as total_execution_time_hours_allthreads
-# FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
-# WHERE tenant_id = '5d856b7a_ab5d_4338_9401_0394dd1da677'
-# GROUP BY tenant_id, thread_id
-# ORDER BY total_execution_time_hours_allthreads DESC
+# MAGIC SELECT tenant_id, thread_id, COUNT(DISTINCT(function_name)) as total_function_count,
+# MAGIC     ROUND((SUM(execution_time)/60)/60, 4) as total_execution_time_hours_allthreads
+# MAGIC FROM IDENTIFIER(catalog_name || '.' || schema_name || '.' || table_name)
+# MAGIC WHERE tenant_id = '5d856b7a_ab5d_4338_9401_0394dd1da677'
+# MAGIC GROUP BY tenant_id, thread_id
+# MAGIC ORDER BY total_execution_time_hours_allthreads DESC
 
 # COMMAND ----------
 
