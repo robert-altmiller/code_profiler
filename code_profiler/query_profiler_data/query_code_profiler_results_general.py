@@ -29,6 +29,31 @@ display(code_profiler_df)
 
 # COMMAND ----------
 
+# DBTITLE 1, Decode the 'source_code_compressed' column for the top 5 slowest runnign functions
+# Get the top 5 records with the highest execution time and decode the source_code_compressed column
+# Define UDF to decode the compressed source code
+def decode_source_code(source_code_compressed):
+    import base64
+    # Decode from base64 to compressed bytes
+    source_code_decompressed = base64.b64decode(source_code_compressed)
+    # Decompress using zlib
+    source_code_decompressed = zlib.decompress(source_code_decompressed).decode('utf-8')
+    return source_code_decompressed
+
+# Register the UDF
+decode_source_code_udf = udf(decode_source_code, StringType())
+
+total_slow_running_fxns = 5
+top_5_slowest_fxns_df = log_message_df \
+    .orderBy(col("execution_time").desc()).limit(total_slow_running_fxns) \
+    .select("class_name", "function_name", "source_code_compressed")
+top_5_slowest_fxns_df = top_5_slowest_fxns_df \
+    .withColumn("source_code_decompressed", decode_source_code_udf(top_5_slowest_fxns_df["source_code_compressed"]))
+top_5_slowest_fxns_df_pandas = top_5_slowest_fxns_df.toPandas()
+print(top_5_slowest_fxns_df_pandas.head())
+
+# COMMAND ----------
+
 # DBTITLE 1,Sed Widgets to be Used With Databricks SQL
 dbutils.widgets.text("catalog_name", catalog, "Catalog Name")
 dbutils.widgets.text("schema_name", schema, "Schema Name")
@@ -45,6 +70,8 @@ dbutils.widgets.text("unqiue_app_id", unqiue_app_id, "Unique App ID")
 # MAGIC DECLARE OR REPLACE table_name = getArgument('table_name');
 # MAGIC DECLARE OR REPLACE unqiue_app_id =  getArgument('unqiue_app_id');
 # MAGIC SELECT unqiue_app_id, catalog_name, schema_name, table_name
+
+
 
 # COMMAND ----------
 

@@ -69,24 +69,3 @@ print(f"log_message_df count: {log_message_df.count()}")
 log_message_df_pandas = log_message_df.toPandas()
 log_message_df_pandas.to_csv(f"{log_file_write_path}/log_message_df_pandas.csv", index=False, header = True)
 print(log_message_df_pandas.head())
-
-# # Get the top 5 records with the highest execution time and decode the source_code_compressed column
-# # Define UDF to decode the compressed source code
-# def decode_source_code(source_code_compressed):
-#     import base64
-#     # Decode from base64 to compressed bytes
-#     source_code_decompressed = base64.b64decode(source_code_compressed)
-#     # Decompress using zlib
-#     source_code_decompressed = zlib.decompress(source_code_decompressed).decode('utf-8')
-#     return source_code_decompressed
-
-# # Register the UDF
-# decode_source_code_udf = udf(decode_source_code, StringType())
-
-# top_5_slowest_fxns_df = log_message_df \
-#     .orderBy(col("execution_time").desc()).limit(5) \
-#     .select("class_name", "function_name", "source_code_compressed")
-# top_5_slowest_fxns_df = top_5_slowest_fxns_df \
-#     .withColumn("source_code_decompressed", decode_source_code_udf(top_5_slowest_fxns_df["source_code_compressed"]))
-# top_5_slowest_fxns_df_pandas = top_5_slowest_fxns_df.toPandas()
-# print(top_5_slowest_fxns_df_pandas.head())
