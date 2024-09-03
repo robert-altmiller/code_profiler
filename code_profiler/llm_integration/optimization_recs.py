@@ -61,6 +61,17 @@ def get_llm_model_response(my_api_key, my_base_url, my_system_prompt, my_user_pr
 
 # how to use this Python code below in each of the unit_testing notebooks:
 
+# large language model (LLM) connection and instruct parameters
+# my_api_key = ""
+# Update the base URL to your own Databricks Serving Endpoint
+# workspace_url = "" 
+# endpoint_url = f"{workspace_url}/serving-endpoints"
+# dbrx_model_ = "databricks-dbrx-instruct"
+# meta_llama_31_70b_instruct_model = "databricks-meta-llama-3-1-70b-instruct"
+# my_system_prompt = """"
+#     Please provide suggestions in single bullet points with a brief description on how to optimize the code below:\n
+# """
+
 # Get function optimization recommendation from LLM (e.g. standalone functions)
 # for fxn_name in function_results:
 #     source_code = get_function_code(current_globals, function_name = fxn_name)

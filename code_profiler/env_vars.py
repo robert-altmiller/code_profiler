@@ -87,14 +87,3 @@ print(f"python_class_and_fxns_scopes_unittesting: {python_class_and_fxns_scopes_
 # python class scopes for python application to run code profiler on (MODIFY)
 python_class_scopes = ["aytframework", "notebooks", "__main__"] # IMPORTANT: the 'notebooks' and '__main__' are mandatory
 print(f"python_class_scopes: {python_class_scopes}\n")
-
-# large language model (LLM) connection and instruct parameters
-my_api_key = ""
-# Update the base URL to your own Databricks Serving Endpoint
-workspace_url = "" 
-endpoint_url = f"{workspace_url}/serving-endpoints"
-dbrx_model_ = "databricks-dbrx-instruct"
-meta_llama_31_70b_instruct_model = "databricks-meta-llama-3-1-70b-instruct"
-my_system_prompt = """"
-    Please provide suggestions in single bullet points with a brief description on how to optimize the code below:\n
-"""
