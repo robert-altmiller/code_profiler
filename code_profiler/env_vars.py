@@ -67,7 +67,7 @@ functions_to_ignore = [
     # timer decorator and write to log function (DO NOT MODIFY)
     "timer",  "wrapper", "write_to_log", "safe_str", "wraps", "process_global_thread_queue_dict", "iterate_queue", 
     # standard functions (DO NOT MODIFY)
-    "open", "getpid", "system", "type", "exit", "displayHTML", "udf", "builtins", "os", "psutil", "sys", "__builtin__"
+    "open", "getpid", "system", "type", "exit", "displayHTML", "udf", "builtins", "os", "psutil", "sys", "__builtin__", "__repr__"
 ]
 print(f"functions_to_ignore: {functions_to_ignore}\n")
 
