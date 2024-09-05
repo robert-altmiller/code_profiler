@@ -127,7 +127,7 @@ There are many different code profilers that exist.  Some of them are c-profile,
 - Step 4: After the main program code executes add the following lines to the end of your '__main.py__' to join all the code profiler data log text files together in Spark dataframe and write the results to a Unity Catalog Delta table.
 
   ```python
-  write_all_code_profiling_logs_and_create_delta_table(
+  log_message_df = write_all_code_profiling_logs_and_create_delta_table(
       spark = spark,
       global_thread_queue_dict = global_thread_queue_dict, # DO NOT MODIFY
       mqueue_batch_size = mqueue_batch_size, # DO NOT MODIFY
@@ -137,6 +137,7 @@ There are many different code profilers that exist.  Some of them are c-profile,
       overwrite_profiling_data = True, # MODIFY (true = overwrite table, false = append table)
       log_file_path = log_file_write_path # DO NOT MODIFY
   )
+  display(log_message_df)
   ```
 
 ## How is all the code profiling data captured after the code profiler finishes?
