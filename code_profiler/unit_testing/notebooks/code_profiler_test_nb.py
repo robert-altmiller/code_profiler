@@ -1,7 +1,3 @@
-import sys
-sys.path.append('/Users/robert.altmiller/repos/projects/github/code_profiler')
-
-
 # Databricks notebook source
 # DBTITLE 1,Import the Python Code Profiler
 from code_profiler.main import *
