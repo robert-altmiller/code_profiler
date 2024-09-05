@@ -1,7 +1,3 @@
-import os, sys
-# Add the path to the code_profiler module
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../..')))
-
 # Library Imports
 from code_profiler.main import *
 from code_profiler.initialize.unit_test.test_functions import *
