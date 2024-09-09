@@ -3,14 +3,16 @@ from code_profiler.llm_integration.install_requirements import *
 
 # library imports
 from code_profiler.llm_integration.llm_prompts import *
+from code_profiler.env_vars import is_running_in_databricks
 import inspect, json, ast, re
 from pyspark.sql.functions import udf, col, lit
 from pyspark.sql.types import StringType
 from pyspark.sql import SparkSession
-from openai import OpenAI
+from openai import *
 
 # Initialize Spark session
-spark = SparkSession.builder.appName("CompressionExample").getOrCreate()
+if is_running_in_databricks() == False:
+    spark = SparkSession.builder.appName("CompressionExample").getOrCreate()
 
 # get function code
 # def get_function_code(globals, class_name=None, function_name=None):
@@ -102,11 +104,11 @@ def get_llm_model_response_udf(my_api_key, my_base_url, my_system_prompt, my_use
 
 
 # wrap the function as a PySpark UDF for code recommendations and optimized code generation
-spark_get_llm_code_recs_response = udf(lambda api_key, base_url, system_prompt, user_prompt, model: 
+spark_get_llm_code_recs_udf = udf(lambda api_key, base_url, system_prompt, user_prompt, model: 
                              sanitize_code_recs_llm_response(get_llm_model_response_udf(api_key, base_url, system_prompt, user_prompt, model)), 
                              StringType())
 
-spark_get_llm_opt_code_response = udf(lambda api_key, base_url, system_prompt, user_prompt, model: 
+spark_get_llm_opt_code_udf = udf(lambda api_key, base_url, system_prompt, user_prompt, model: 
                              get_llm_model_response_udf(api_key, base_url, system_prompt, user_prompt, model),
                              StringType())
 
@@ -134,8 +136,8 @@ spark_get_llm_opt_code_response = udf(lambda api_key, base_url, system_prompt, u
 # endpoint_url = f"{workspace_url}/serving-endpoints"
 
 # # Call to the LLM model UDFs for optimization recommendations and optimized code
-# df = df.withColumn("llm_opt_suggestions", spark_get_llm_code_recs_response(lit(my_api_key), lit(endpoint_url), lit(code_recs_prompt), df.source_code, lit(llm_model_name)))
-# df = df.withColumn("llm_opt_code", spark_get_llm_opt_code_response(lit(my_api_key), lit(endpoint_url), lit(code_opt_prompt), df.source_code, lit(llm_model_name)))
+# df = df.withColumn("llm_opt_suggestions", spark_get_llm_code_recs_udf(lit(my_api_key), lit(endpoint_url), lit(code_recs_prompt), df.source_code, lit(llm_model_name)))
+# df = df.withColumn("llm_opt_code", spark_get_llm_opt_code_udf(lit(my_api_key), lit(endpoint_url), lit(code_opt_prompt), df.source_code, lit(llm_model_name)))
 # df.select("llm_opt_suggestions").show(1, truncate = False)
 # df.select("llm_opt_code").show(1, truncate = False)
 

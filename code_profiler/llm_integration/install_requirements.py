@@ -1,7 +1,7 @@
 import subprocess
 import sys
 
-def install_requirements(requirements_file='./requirements.txt'):
+def install_requirements(requirements_file='requirements.txt'):
     """Install the requirements from the requirements.txt file using subprocess."""
     pip_command = [sys.executable, '-m', 'pip', 'install', '-r', requirements_file]
     try:
@@ -11,4 +11,4 @@ def install_requirements(requirements_file='./requirements.txt'):
         print(f"Error occurred while installing packages: {e}")
 
 # Example: Run the function
-install_requirements()
+install_requirements(requirements_file='../../code_profiler/llm_integration/requirements.txt')
