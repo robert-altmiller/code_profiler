@@ -11,4 +11,4 @@ def install_requirements(requirements_file='requirements.txt'):
         print(f"Error occurred while installing packages: {e}")
 
 # Example: Run the function
-install_requirements(requirements_file='../../code_profiler/llm_integration/requirements.txt')
+install_requirements(requirements_file='requirements.txt')

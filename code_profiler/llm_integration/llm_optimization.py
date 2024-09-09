@@ -8,7 +8,7 @@ import inspect, json, ast, re
 from pyspark.sql.functions import udf, col, lit
 from pyspark.sql.types import StringType
 from pyspark.sql import SparkSession
-from openai import *
+import openai
 
 # Initialize Spark session
 if is_running_in_databricks() == False:
@@ -56,19 +56,9 @@ if is_running_in_databricks() == False:
 #     source_code = get_function_code(current_globals, function_name = fxn_name)
 #     print(f"\n{fxn_name}():\n{source_code}\n")
 
-# # Get function optimization recommendation from LLM (e.g. class functions)
-# for cls_fxn_name in python_class_results:
-#     cls_name, fxn_name = cls_fxn_name.split('.')
-#     source_code = get_function_code(current_globals, class_name = cls_name, function_name = fxn_name)
-#     # Get large language model optimization recommendations
-#     optimization_recs_json = get_llm_model_response(my_api_key, endpoint_url, my_system_prompt, source_code, my_model = meta_llama_31_70b_instruct_model)
-#     print(f"\n{cls_name}.{fxn_name}():\n{source_code}\n")
-#     print(optimization_recs_json)
-
 
 def sanitize_code_recs_llm_response(response):
     """function to sanitize the LLM response for optimized code recommendations"""
-    
     try:
         # find the second occurrence of "]" and chop off everything after it
         second_closing_bracket_index = response.find("]", response.find("]") + 1)
@@ -84,25 +74,32 @@ def sanitize_code_recs_llm_response(response):
 
 
 def get_llm_model_response_udf(my_api_key, my_base_url, my_system_prompt, my_user_prompt, my_model):
-    """function to get LLM model response, refactored to work as a user defined function (UDF)"""
+    """Function to get LLM model response, refactored to work as a user defined function (UDF)"""
     try:
+        # Set up OpenAI API key
+        openai.api_key = my_api_key
+        openai.api_base = my_base_url
+
         # Call the OpenAI API to get the response
-        response = OpenAI(api_key = my_api_key, base_url = my_base_url).chat.completions.create(
-            model = my_model,
+        response = openai.ChatCompletion.create(
+            model=my_model,
             messages=[
                 {
-                "role": "system", 
-                "content": my_system_prompt 
+                    "role": "system", 
+                    "content": my_system_prompt 
                 },
                 {
-                "role": "user",
-                "content": my_user_prompt
+                    "role": "user",
+                    "content": my_user_prompt
                 }
             ]
         )
-        return json.loads(response.json())["choices"][0]["message"]["content"]
+
+        # Extract the response content
+        return response['choices'][0]['message']['content']
+    
     except Exception as e:
-        return [str(e)]
+        return str(e)
 
 
 # wrap the function as a PySpark UDF for code recommendations and optimized code generation
@@ -131,7 +128,7 @@ spark_get_llm_opt_code_udf = udf(lambda api_key, base_url, system_prompt, user_p
 # df = spark.createDataFrame(data, ["source_code"])
 
 # # large language model (LLM) connection and instruct parameters
-# my_api_key = ""
+# my_api_key = "" # insert your api key here
 # # Update the base URL to your own Databricks Serving Endpoint
 # workspace_url = "https://e2-demo-field-eng.cloud.databricks.com"
 # llm_model_name = "databricks-dbrx-instruct"
