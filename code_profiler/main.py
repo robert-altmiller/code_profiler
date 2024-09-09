@@ -1,4 +1,4 @@
-from code_profiler.profiler_tools import *
+from code_profiler.llm_integration.profiler_tools import *
 
 def add_timer_to_all_functions(globals, log_file_path):
     # Example usage: Call this function after all imports to apply timer decorator

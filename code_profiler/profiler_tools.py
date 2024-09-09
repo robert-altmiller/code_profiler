@@ -373,7 +373,11 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         StructField("kwargs", StringType(), True),
         StructField("return_value", StringType(), True),
         StructField("source_code_compressed", StringType(), True),
-        StructField("source_code_md5_hash", StringType(), True)
+        StructField("source_code_md5_hash", StringType(), True),
+        StructField("fxn_opt_potential_indicator", StringType(), True),
+        # StructField("llm_opt_suggestions", StringType(), True),
+        # StructField("llm_opt_code", StringType(), True),
+        # StructField("llm_opt_code_run_status", StringType(), True)
     ])
 
     # create DataFrame from the list of Python dictionaries and the schema
