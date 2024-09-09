@@ -10,7 +10,7 @@ Here is an example below for how to return the results:
 Here is the code below:\n\n
 '''
 
-# optimized 
+# optimized code prompt
 code_opt_prompt = '''
 Please optimize the following Python code with a focus on performance, readability, and adherence to Pythonic best practices (e.g., PEP-8 standards, minimizing redundancy, and using built-in functions where appropriate). The optimizations should:
 

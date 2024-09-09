@@ -5,7 +5,7 @@ from code_profiler.llm_integration.install_requirements import *
 from code_profiler.llm_integration.llm_prompts import *
 import inspect, json, ast, re
 from pyspark.sql.functions import udf, col, lit
-from pyspark.sql.types import StringType, ArrayType
+from pyspark.sql.types import StringType
 from pyspark.sql import SparkSession
 from openai import OpenAI
 
