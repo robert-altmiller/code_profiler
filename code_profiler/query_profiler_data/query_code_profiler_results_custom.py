@@ -62,8 +62,8 @@
 
 # Call to the LLM model UDFs for optimization recommendations and optimized code
 # MAGICtop_5_slowest_fxns_df_optimized = top_5_slowest_fxns_df \
-# MAGIC  .withColumn("llm_opt_suggestions", spark_get_llm_code_recs_response(lit(my_api_key), lit(endpoint_url), lit(code_recs_prompt), top_5_slowest_fxns_df.source_code_decompressed, lit(llm_model_name))) \
-# MAGIC  .withColumn("llm_opt_code", spark_get_llm_opt_code_response(lit(my_api_key), lit(endpoint_url), lit(code_opt_prompt), top_5_slowest_fxns_df.source_code_decompressed, lit(llm_model_name)))
+# MAGIC  .withColumn("llm_opt_suggestions", spark_get_llm_code_recs_udf(lit(my_api_key), lit(endpoint_url), lit(code_recs_prompt), top_5_slowest_fxns_df.source_code_decompressed, lit(llm_model_name))) \
+# MAGIC  .withColumn("llm_opt_code", spark_get_llm_opt_code_udf(lit(my_api_key), lit(endpoint_url), lit(code_opt_prompt), top_5_slowest_fxns_df.source_code_decompressed, lit(llm_model_name)))
 # MAGIC display(MAGICtop_5_slowest_fxns_df_optimized)
 
 # COMMAND ----------
