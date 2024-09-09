@@ -1,5 +1,5 @@
 # pip install libraries
-from install_requirements import *
+from code_profiler.llm_integration.install_requirements import *
 
 # library imports
 from code_profiler.llm_integration.llm_prompts import *
