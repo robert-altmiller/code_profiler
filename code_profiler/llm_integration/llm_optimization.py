@@ -68,12 +68,14 @@ if is_running_in_databricks() == False:
 
 def sanitize_code_recs_llm_response(response):
     """function to sanitize the LLM response for optimized code recommendations"""
-    # find the second occurrence of "]" and chop off everything after it
-    second_closing_bracket_index = response.find("]", response.find("]") + 1)
-    # if we find the second "]", trim the string after it
-    if second_closing_bracket_index != -1:
-        response = response[:second_closing_bracket_index + 1]
     
+    try:
+        # find the second occurrence of "]" and chop off everything after it
+        second_closing_bracket_index = response.find("]", response.find("]") + 1)
+        # if we find the second "]", trim the string after it
+        if second_closing_bracket_index != -1:
+            response = response[:second_closing_bracket_index + 1]
+    except: print('')
     # allow only valid characters (alphanumeric, spaces, commas, square brackets, quotes)
     response = re.sub(r"[^a-zA-Z0-9\s\[\]\",']", "", response)
     # remove excess whitespace
