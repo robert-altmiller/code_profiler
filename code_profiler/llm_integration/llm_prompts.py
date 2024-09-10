@@ -25,7 +25,7 @@ Your submission should mimic a direct code commit in a professional software dev
 The returned answer should only be the optimized function definition like in the example below:
 
 def example(n: int) -> int:
-    """Calculate the factorial of a number.
+    """Here are some example comments.
 
     :param n: The number to calculate the factorial of.
     :return: The factorial of the input number.
@@ -35,5 +35,5 @@ def example(n: int) -> int:
         result *= i
     return result
 
-Here is the code below to optimize, and remember, the returned answer is only the optimized function definition.  Do not include any explanations or comments before or after:\n\n
+Here is the code below to optimize:\n\n
 '''
