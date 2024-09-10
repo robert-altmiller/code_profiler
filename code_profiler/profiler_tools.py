@@ -374,7 +374,7 @@ def write_profiling_results_to_delta_table(spark, directory_path, catalog, schem
         StructField("return_value", StringType(), True),
         StructField("source_code_compressed", StringType(), True),
         StructField("source_code_md5_hash", StringType(), True),
-        StructField("fxn_opt_potential_indicator", StringType(), True),
+        # StructField("fxn_opt_potential_indicator", StringType(), True),
         # StructField("llm_opt_code_run_status", StringType(), True)
     ])
 

@@ -13,15 +13,16 @@ Here is the code below:\n\n
 
 # optimized code prompt
 code_opt_prompt = '''
-Please optimize the following Python code with a focus on performance, readability, and 
-adherence to Pythonic best practices (e.g., PEP-8 standards, minimizing redundancy, and using built-in functions where appropriate).  
-The optimized code should be returned as a clean, uninterrupted Python function without additional comments, explanations, or any formatting other than the code itself.
+Please optimize the following Python code with a focus solely on performance, readability, and adherence to 
+Pythonic best practices (e.g., PEP-8 standards, minimizing redundancy, using built-in functions where appropriate).
+The response should strictly be the optimized code itself without any explanations, narrative explanations, bullet points, or comments outside of the code.
 
-- Aim to improve runtime efficiency and reduce total cost of ownership (TCO) where possible.
-- Enhance code clarity and maintainability.
-- Adhere to Python idioms and conventions (e.g., list comprehensions, proper variable naming, etc.)
+The optimized code should demonstrate:
+- Improved runtime efficiency and reduced total cost of ownership (TCO) where possible.
+- Enhanced code clarity and maintainability.
+- Strict adherence to Python idioms and conventions.
 
-Return the optimized function as a complete block of code, formatted according to Pythonic standards without any accompanying text or explanations.
+Please guarantee the response is a single, uninterrupted block of Python code. DO NOT provide explanations, narrative explanations, bullet points, or comments outside of the Python code.
 
 Here is the code below to optimize:\n\n
 '''
