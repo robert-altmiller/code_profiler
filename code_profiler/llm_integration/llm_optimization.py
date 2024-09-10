@@ -36,7 +36,7 @@ def get_llm_model_response_udf(my_api_key, my_base_url, my_system_prompt, my_use
             messages=[
                 {
                     "role": "system", 
-                    "content": my_system_prompt 
+                    "content": my_system_prompt + str(no_explanation)
                 },
                 {
                     "role": "user",
