@@ -22,7 +22,7 @@ Please reformat and optimize the code below to ensure it meets the system's stri
 
 Your submission should mimic a direct code commit in a professional software development environment, including appropriate docstrings.
 
-The returned answer should only be the optimized function.  DO NOT INCLUDE ANY EXPLANATIONS!!
+The returned answer should only be the optimized function with proper spacing.  DO NOT INCLUDE ANY EXPLANATIONS!!
 
-Here is the code below to optimize, and remember, the returned answer is only the optimized function:\n\n
+Here is the code below to optimize, and remember, the returned answer is only the optimized function with proper spacing:\n\n
 '''
