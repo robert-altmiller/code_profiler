@@ -1,11 +1,12 @@
 # code recommendations prompt
 code_recs_prompt = '''
-Please provide suggestions in the form of a Python list on how to optimize the code below. 
+Please provide suggestions in the form of a Python list on how to optimize the code below.
+Each suggestion should be a string in a list format, without any numbering or additional text outside the list items.
 The suggestions should focus on, but are not limited to, performance improvements, code readability, 
-and adherence to Pythonic best practices.  Do not include any optimized code in the return results.
+and adherence to Pythonic best practices. Do not include any optimized code or additional text in the return results.
 
-Here is an example below for how to return the results: 
-["change something1", "change something2", "change something3"]\n\n
+For clarity, please ensure each suggestion is formatted as a direct list item. Example of expected format:
+["suggestion one", "suggestion two", "suggestion three"]
 
 Here is the code below:\n\n
 '''
