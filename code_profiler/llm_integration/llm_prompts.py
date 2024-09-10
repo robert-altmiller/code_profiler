@@ -19,6 +19,7 @@ Your submission should mimic a direct code commit in a professional software dev
 
 example:
 
+<no comments, explanations or text before>
 ``` python
 def example(n: int) -> int:
     """
@@ -29,6 +30,7 @@ def example(n: int) -> int:
     result = 1
     return result
 ```
+<no comments, explanations or text after>
 
 Here is the code below to optimize, and remember, the returned answer is like the example:\n\n
 '''
