@@ -24,8 +24,5 @@ Your submission should mimic a direct code commit in a professional software dev
 
 The returned answer should only be the optimized function.  DO NOT INCLUDE ANY EXPLANATIONS!!
 
-Here is the code below to optimize:\n\n
+Here is the code below to optimize, and remember, the returned answer is only the optimized function:\n\n
 '''
-
-# include no explanation prompt
-no_explanation = '''\n\nThe returned answer should only be the optimized function.  DO NOT INCLUDE ANY EXPLANATIONS!!\n\n'''
