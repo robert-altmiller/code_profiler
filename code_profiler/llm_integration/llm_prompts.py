@@ -22,7 +22,7 @@ Please reformat and optimize the code below to ensure it meets the system's stri
 
 Your submission should mimic a direct code commit in a professional software development environment, including appropriate docstrings.
 
-The returned answer should ONLY be the optimized function definition.  Do NOT include any explanations for the optimized function definition.
+The returned answer should ONLY be the optimized function definition.
 
-Here is the code below to optimize, and remember, the returned answer is ONLY the optimized function definition:\n\n
+Here is the code below to optimize, and remember, the returned answer is only the optimized function definition.  Do not include any explanations before or after the optimized function definition:\n\n
 '''
