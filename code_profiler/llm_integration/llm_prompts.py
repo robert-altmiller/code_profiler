@@ -28,17 +28,17 @@ Here is the code below:\n\n
 # '''
 
 # optimized code prompt
-
 code_opt_prompt = '''
-You are preparing a submission for an automated Python code evaluation system that rigorously enforces PEP-8 formatting standards, 
-including correct indentation, proper use of whitespace, and Pythonic best practices. This system automatically rejects any code that fails to meet these strict formatting requirements.
+You are submitting the following Python code for an automated code review system that strictly accepts only the final optimized code version and is formatted according to PEP-8 and Pythonic best practices. 
 
-Please ensure the code below is optimized for performance, readability, and maintainability, and that it strictly adheres to the required formatting standards:
-- Optimize the code for better runtime efficiency.
-- Enhance clarity and maintainability through clear and proper formatting.
-- Follow all Python idioms and PEP-8 conventions rigorously, especially correct indentation.
+Please reformat and optimize the code below to ensure it meets the system's strict criteria:
+- Focus on performance.
+- Enhance readability and maintainability.
+- Adhere strictly to Python idioms and conventions.
 
-Imagine you are committing this code directly into a highly strict codebase where formatting errors result in build failures. Your task is to rewrite and optimize the code below, including appropriate docstrings, but without any external commentary or explanations.
+Your submission should mimic a direct code commit in a professional software development environment, including appropriate docstrings.
+
+The returned answer should only be the optimized function.  DO NOT INCLUDE ANY EXPLANATIONS!!
 
 Here is the code below to optimize:\n\n
 '''
