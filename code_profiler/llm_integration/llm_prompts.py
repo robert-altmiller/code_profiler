@@ -28,4 +28,4 @@ Here is the code below to optimize:\n\n
 '''
 
 # include no explanation prompt
-no_explanation = '''\n\nThe returned answer should only be the optimized function.  DO NOT INCLUDE ANY EXPLANATIONS!!'''
+no_explanation = '''\n\nThe returned answer should only be the optimized function.  DO NOT INCLUDE ANY EXPLANATIONS!!\n\n'''
