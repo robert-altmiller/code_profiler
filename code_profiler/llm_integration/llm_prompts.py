@@ -23,16 +23,5 @@ The optimized code should be returned as a clean, uninterrupted Python function 
 
 Return the optimized function as a complete block of code, formatted according to Pythonic standards without any accompanying text or explanations.
 
-Here is an example of how the result should look:
-
-def is_prime(n):
-    """Check if a number is prime."""
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-Now, optimize the code below:\n\n
+Here is the code below to optimize:\n\n
 '''
