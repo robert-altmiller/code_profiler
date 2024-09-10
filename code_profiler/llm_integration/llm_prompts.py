@@ -12,14 +12,38 @@ Here is the code below:\n\n
 '''
 
 # optimized code prompt
+# code_opt_prompt = '''
+# You are submitting the following Python code for an automated code review system that strictly accepts only the final optimized code version and is formatted according to Pythonic best practices.  
+# Please reformat and optimize the code below to ensure it meets the system's strict criteria: focus on performance and optimization, enhance readability and maintainability, and adhere strictly to Python idioms and conventions.  
+# Your submission should mimic a direct code commit in a professional software development environment, including appropriate code comments.  
+
+# example:
+
+# <no comments, explanations, numbered lists, bullet points, or text before>
+# ``` python
+# def example(n: int) -> int:
+#     """
+#     Example comments.
+#     :param n: Example parameter.
+#     :return: Example return type.
+#     """
+#     result = 1
+#     return result
+# ```
+# <no comments, explanations, numbered lists, bullet points, or text after>
+
+# Here is the code below to optimize, and remember, the returned answer is like the example:\n\n
+# '''
+
 code_opt_prompt = '''
-You are submitting the following Python code for an automated code review system that strictly accepts only the final optimized code version and is formatted according to Pythonic best practices.  
+You are submitting the following Python code for an automated code review system that strictly accepts only the final optimized code version formatted according to Pythonic best practices.  
 Please reformat and optimize the code below to ensure it meets the system's strict criteria: focus on performance and optimization, enhance readability and maintainability, and adhere strictly to Python idioms and conventions.  
-Your submission should mimic a direct code commit in a professional software development environment, including appropriate code comments.  
+Your submission should mimic a direct code commit in a professional software development environment and must strictly include only the code with appropriate code comments similar to the example provided.  
 
-example:
+IMPORTANT: The response must contain only the code. DO NOT include any narrative text, explanations, numbered lists, bullet points, or additional text before or after the code. The response should start and end with the code block as shown in the example.
 
-<no comments, explanations, numbered lists, bullet points, or text before>
+Example:
+
 ``` python
 def example(n: int) -> int:
     """
@@ -30,7 +54,4 @@ def example(n: int) -> int:
     result = 1
     return result
 ```
-<no comments, explanations, numbered lists, bullet points, or text after>
-
-Here is the code below to optimize, and remember, the returned answer is like the example:\n\n
 '''
