@@ -6,7 +6,7 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import *
 from pyspark.sql import SparkSession
 from functools import wraps
-
+from code_profiler.llm_integration.llm_optimization import *
 
 def is_running_in_databricks():
     """check if code is running in Databricks or locally"""
@@ -28,6 +28,8 @@ if is_running_in_databricks() == False:
     spark = SparkSession.builder \
         .appName("CodeProfiling") \
         .getOrCreate()
+    install_requirements(requirements_file = f'{os.path.dirname(os.path.abspath(__file__))}/llm_integration/requirements.txt')
+else:  install_requirements(requirements_file='requirements.txt')
 
 # local parameters (DO NOT MODIFY)
 thread_local = threading.local()

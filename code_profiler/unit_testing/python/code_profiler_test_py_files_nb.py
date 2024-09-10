@@ -14,6 +14,7 @@ from code_profiler.initialize.unit_test.test_class import *
 if is_running_in_databricks() == True:
     # Clear the widgets
     dbutils.widgets.removeAll()
+ 
 # Change the log_file_write_path
 log_file_write_path = "./code_profiling/code_profiler_unit_test_py_files_in_nb"
 

@@ -9,6 +9,3 @@ def install_requirements(requirements_file='requirements.txt'):
         print(f"Successfully installed packages from {requirements_file}")
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while installing packages: {e}")
-
-# Example: Run the function
-install_requirements(requirements_file='requirements.txt')

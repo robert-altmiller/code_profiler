@@ -9,7 +9,7 @@
 # MAGIC from datetime import datetime
 # MAGIC from pyspark.sql.types import *
 # MAGIC from pyspark.sql.functions import *
-# MAGIC from code_profiler.llm_integration.llm_optimization import *
+# MAGIC from code_profiler.main import *
 
 # COMMAND ----------
 
@@ -54,15 +54,14 @@
 
 # DBTITLE 1, Get LLM function code optimizations and an example of optimized code for the top 5 slowest running functions
 # Large language model (LLM) connection and instruct parameters
-# Large language model (LLM) connection and instruct parameters
-# MAGIC my_api_key = "" # insert your api key here
+# MAGIC my_api_key = "" # insert your api key here (e.g. Databricks PAT Token)
 # Update the base URL to your own Databricks Serving Endpoint
 # MAGIC workspace_url = "https://e2-demo-field-eng.cloud.databricks.com"
 # MAGIC llm_model_name = "databricks-dbrx-instruct"
 # MAGIC endpoint_url = f"{workspace_url}/serving-endpoints"
 
 # Call to the LLM model UDFs for optimization recommendations and optimized code
-# MAGICtop_5_slowest_fxns_df_optimized = top_5_slowest_fxns_df \
+# MAGIC top_5_slowest_fxns_df_optimized = top_5_slowest_fxns_df \
 # MAGIC  .withColumn("llm_opt_suggestions", spark_get_llm_code_recs_udf(lit(my_api_key), lit(endpoint_url), lit(code_recs_prompt), top_5_slowest_fxns_df.source_code_decompressed, lit(llm_model_name))) \
 # MAGIC  .withColumn("llm_opt_code", spark_get_llm_opt_code_udf(lit(my_api_key), lit(endpoint_url), lit(code_opt_prompt), top_5_slowest_fxns_df.source_code_decompressed, lit(llm_model_name)))
 # MAGIC display(top_5_slowest_fxns_df_optimized)

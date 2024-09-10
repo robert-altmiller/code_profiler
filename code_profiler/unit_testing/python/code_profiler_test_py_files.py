@@ -3,12 +3,16 @@ from code_profiler.main import *
 from code_profiler.initialize.unit_test.test_functions import *
 from code_profiler.initialize.unit_test.test_class import *
 
+
 # Change the log_file_write_path
 if is_running_in_databricks() == True:
     # Clear the widgets
     dbutils.widgets.removeAll()
+    
+
 # Change the log_file_write_path
 log_file_write_path = "./code_profiling/code_profiler_test_py_files_in_python_file"
+
 
 # Check if the path exists
 if os.path.exists(log_file_write_path):
@@ -63,5 +67,5 @@ log_message_df = write_all_code_profiling_logs_and_create_delta_table(
 )
 print(f"log_message_df count: {log_message_df.count()}")
 log_message_df_pandas = log_message_df.toPandas()
-log_message_df_pandas.to_csv(f"{log_file_write_path}/log_message_df_pandas.csv", index=False, header = True)
+log_message_df_pandas.to_csv(f"{log_file_write_path}/log_message_df_pandas.csv", index = False, header = True)
 print(log_message_df_pandas.head())

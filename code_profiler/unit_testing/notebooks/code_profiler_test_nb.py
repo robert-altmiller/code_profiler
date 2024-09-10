@@ -12,6 +12,7 @@ from code_profiler.main import *
 # DBTITLE 1,Import the test_class notebook
 # MAGIC %run ../../initialize/unit_test/test_class_nb
 
+
 # COMMAND ----------
 
 # DBTITLE 1,Check if running locally in Databricks and set the log_file_write_path
@@ -21,6 +22,7 @@ if is_running_in_databricks() == True:
 else: 
     from code_profiler.initialize.unit_test.test_functions_nb import *
     from code_profiler.initialize.unit_test.test_class_nb import *
+
 # Change the log_file_write_path
 log_file_write_path = "./code_profiling/code_profiler_unit_test_nb"
 
