@@ -1,4 +1,4 @@
-# code recommendations prompt
+# code recommendations prompt (version 2)
 code_recs_prompt = '''
 Please provide suggestions in the form of a Python list on how to optimize the code below.
 Each suggestion should be a string in a list format, without any numbering or additional text outside the list items.
@@ -11,7 +11,29 @@ For clarity, please ensure each suggestion is formatted as a direct list item. E
 Here is the code below:\n\n
 '''
 
-# optimized code prompt
+# optimized code prompt (version 2)
+code_opt_prompt = '''
+You are submitting the following Python code for an automated code review system that strictly accepts only the final optimized code version formatted according to Pythonic best practices.  
+Please reformat and optimize the code below to ensure it meets the system's strict criteria: focus on performance and optimization, enhance readability and maintainability, and adhere strictly to Python idioms and conventions.  
+Your submission should mimic a direct code commit in a professional software development environment and must strictly include only the code with appropriate code comments similar to the example provided.  
+
+IMPORTANT: The response must contain only the code. DO NOT include any narrative text, explanations, numbered lists, bullet points, or additional text before or after the code. The response should start and end with the code block as shown in the example.
+
+Example:
+
+``` python
+def example(n: int) -> int:
+    """
+    Example comments.
+    :param n: Example parameter.
+    :return: Example return type.
+    """
+    result = 1
+    return result
+```
+'''
+
+# optimized code prompt (version 1)
 # code_opt_prompt = '''
 # You are submitting the following Python code for an automated code review system that strictly accepts only the final optimized code version and is formatted according to Pythonic best practices.  
 # Please reformat and optimize the code below to ensure it meets the system's strict criteria: focus on performance and optimization, enhance readability and maintainability, and adhere strictly to Python idioms and conventions.  
@@ -34,24 +56,3 @@ Here is the code below:\n\n
 
 # Here is the code below to optimize, and remember, the returned answer is like the example:\n\n
 # '''
-
-code_opt_prompt = '''
-You are submitting the following Python code for an automated code review system that strictly accepts only the final optimized code version formatted according to Pythonic best practices.  
-Please reformat and optimize the code below to ensure it meets the system's strict criteria: focus on performance and optimization, enhance readability and maintainability, and adhere strictly to Python idioms and conventions.  
-Your submission should mimic a direct code commit in a professional software development environment and must strictly include only the code with appropriate code comments similar to the example provided.  
-
-IMPORTANT: The response must contain only the code. DO NOT include any narrative text, explanations, numbered lists, bullet points, or additional text before or after the code. The response should start and end with the code block as shown in the example.
-
-Example:
-
-``` python
-def example(n: int) -> int:
-    """
-    Example comments.
-    :param n: Example parameter.
-    :return: Example return type.
-    """
-    result = 1
-    return result
-```
-'''
