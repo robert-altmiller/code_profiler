@@ -26,8 +26,6 @@ if is_running_in_databricks() == False:
         .getOrCreate()
     install_requirements(requirements_file = f'{os.path.dirname(os.path.abspath(__file__))}/llm_integration/requirements.txt')
 else: # execution is in Databricks
-    # clear the widgets and install requirements.txt file
-    dbutils.widgets.removeAll()
     install_requirements(requirements_file='requirements.txt')
 
 # unique identifer for python code / application name (OPTIONAL MODIFY)
