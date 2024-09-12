@@ -56,7 +56,7 @@ print(inventory.list_items())
 # Functions usage example:
 print("Checking if 29 is prime:", is_prime(29))
 print("10°C to Fahrenheit:", celsius_to_fahrenheit(10))
-print("Factorial of 5:", factorial(5))
+print("Factorial of 5:", factorial_calc(5))
 print("First 5 Fibonacci numbers:", fibonacci(5))
 print("Reversed string of 'hello':", reverse_string('hello'))
 print("Sum of list [1, 2, 3, 4]:", sum_of_list([1, 2, 3, 4]))
