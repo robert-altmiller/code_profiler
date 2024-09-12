@@ -48,7 +48,7 @@ print(f"\nprint_recursion_limit: {print_recursion_limit}\n")
 
 # get builtin types using builtins class
 builtin_types = [t.__name__ for t in vars(builtins).values() if isinstance(t, type)] # DO NOT MODIFY
-print(f"builtin_types: {builtin_types}")
+print(f"builtin_types: {builtin_types}\n")
 
 # functions to ignore
 functions_to_ignore = [
