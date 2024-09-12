@@ -44,6 +44,7 @@ print(f"python file class decorated functions: {python_class_results}")
 
 # DBTITLE 1,Testing Class for Timer Decorator Call
 # Class usage example:
+print("Class usage example:")
 inventory = Inventory()
 inventory.add_item("001", {"name": "Laptop", "quantity": 10, "price": 1200.00})
 inventory.update_item("001", {"name": "Laptop", "quantity": 12, "price": 1150.00})
