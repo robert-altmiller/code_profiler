@@ -18,11 +18,7 @@ def is_running_in_databricks():
         #print("code is running locally....\n")
         return False
 
-
-# unique identifer for python code / application name (OPTIONAL MODIFY)
-unique_app_id = "xxxxxxxxxxxxx" 
-print(f"unique_app_id: {unique_app_id}")
-
+# create spark session and install requirements (e.g. openai)
 if is_running_in_databricks() == False:
     # create a new local Spark session (DO NOT MODIFY)
     spark = SparkSession.builder \
@@ -30,6 +26,10 @@ if is_running_in_databricks() == False:
         .getOrCreate()
     install_requirements(requirements_file = f'{os.path.dirname(os.path.abspath(__file__))}/llm_integration/requirements.txt')
 else:  install_requirements(requirements_file='requirements.txt')
+
+# unique identifer for python code / application name (OPTIONAL MODIFY)
+unique_app_id = "xxxxxxxxxxxxx" 
+print(f"unique_app_id: {unique_app_id}")
 
 # local parameters (DO NOT MODIFY)
 thread_local = threading.local()
