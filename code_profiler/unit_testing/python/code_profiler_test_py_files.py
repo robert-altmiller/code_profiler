@@ -4,7 +4,6 @@ from code_profiler.initialize.unit_test.test_functions import *
 from code_profiler.initialize.unit_test.test_class import *
 
 
-# Change the log_file_write_path
 if is_running_in_databricks() == True:
     # Clear the widgets
     dbutils.widgets.removeAll()
