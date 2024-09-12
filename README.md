@@ -108,6 +108,10 @@ There are many different code profilers that exist.  Some of them are c-profile,
   # all custom and standard library imports need to execute first....
   from code_profiler.main import *
   
+  if is_running_in_databricks() == True:
+      # Clear the widgets
+      dbutils.widgets.removeAll()
+
   # update the log_file_write_path environment variable (e.g. update email)
   log_file_write_path = f"/Workspace/Users/robert.altmiller@databricks.com/code_profiling/{unique_app_id}/{datetime.now().date()}"
   # Check if the path exists
