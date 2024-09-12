@@ -61,7 +61,7 @@ functions_to_ignore = [
     # all standalone Python functions helpers (DO NOT MODIFY)
     "is_library_defined_function", "apply_timer_decorator_to_all_python_functions", "is_running_in_databricks",
     # llm helper functions (DO NOT MODIFY)
-    "get_function_code", "get_llm_response",
+    "install_requirements", "get_llm_model_response", "sanitize_code_recs_llm_response", "spark_get_llm_code_recs_udf", "spark_get_llm_opt_code_udf",
     # create delta table function helpers (DO NOT MODIFY)
     "get_profiling_result_paths", "get_all_profiling_results_joined", "write_profiling_results_to_delta_table", 
     "create_code_profiling_results_delta_table", "add_timer_to_all_functions",

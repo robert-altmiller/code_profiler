@@ -23,7 +23,7 @@ def sanitize_code_recs_llm_response(response):
     return response
 
 
-def get_llm_model_response_udf(my_api_key, my_base_url, my_system_prompt, my_user_prompt, my_model):
+def get_llm_model_response(my_api_key, my_base_url, my_system_prompt, my_user_prompt, my_model):
     """Function to get LLM model response, refactored to work as a user defined function (UDF)"""
     try:
         # Set up OpenAI API key
@@ -54,11 +54,11 @@ def get_llm_model_response_udf(my_api_key, my_base_url, my_system_prompt, my_use
 
 # wrap the function as a PySpark UDF for code recommendations and optimized code generation
 spark_get_llm_code_recs_udf = udf(lambda api_key, base_url, system_prompt, user_prompt, model: 
-                             sanitize_code_recs_llm_response(get_llm_model_response_udf(api_key, base_url, system_prompt, user_prompt, model)), 
+                             sanitize_code_recs_llm_response(get_llm_model_response(api_key, base_url, system_prompt, user_prompt, model)), 
                              StringType())
 
 spark_get_llm_opt_code_udf = udf(lambda api_key, base_url, system_prompt, user_prompt, model: 
-                             get_llm_model_response_udf(api_key, base_url, system_prompt, user_prompt, model),
+                             get_llm_model_response(api_key, base_url, system_prompt, user_prompt, model),
                              StringType())
 
 
