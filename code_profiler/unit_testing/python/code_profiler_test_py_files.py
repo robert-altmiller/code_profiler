@@ -51,6 +51,8 @@ print("Reversed string of 'hello':", reverse_string('hello'))
 print("Sum of list [1, 2, 3, 4]:", sum_of_list([1, 2, 3, 4]))
 print("Is 'radar' a palindrome?", is_palindrome('radar'))
 print("Max in list [1, 99, 34, 56]:", max_in_list([1, 99, 34, 56]))
+print("120 miles in kilometers:", miles_to_kilometers(120))
+print("Count vowels in the word 'aggregation':", count_vowels("aggregation"))
 print("\n")
 
 
