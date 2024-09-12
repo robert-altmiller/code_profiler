@@ -9,11 +9,11 @@ def add_timer_to_all_functions(globals, log_file_path, class_scopes = python_cla
 
 #or
 
-# def add_timer_to_all_functions(globals, log_file_path):
+# def add_timer_to_all_functions(globals, log_file_path, class_scopes = python_class_scopes):
 #     # Example usage: Call this function after all imports to apply timer decorator
 #     globals, function_results = apply_timer_decorator_to_all_python_functions(globals, log_file_path = log_file_path)
-#     globals, python_class_results = apply_timer_decorator_to_all_python_class_functions(globals, python_class_scopes, log_file_path = log_file_path) # python_class_results is first
-#     globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(globals, python_class_scopes, python_class_results log_file_path = log_file_path) # nb_class_results is second
+#     globals, python_class_results = apply_timer_decorator_to_all_python_class_functions(globals, class_scopes, log_file_path = log_file_path) # python_class_results is first
+#     globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(globals, class_scopes, python_class_results log_file_path = log_file_path) # nb_class_results is second
 #     return globals, function_results, nb_class_results, python_class_results
 
 
