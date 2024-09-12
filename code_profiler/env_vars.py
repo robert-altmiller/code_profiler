@@ -79,7 +79,7 @@ print(f"log_file_write_path: {log_file_write_path}\n")
 
 # unit testing python class and functions scope (DO NOT MODIFY)
 python_class_and_fxns_scopes_unittesting = [
-    "Inventory", "is_prime", "factorial", "celsius_to_fahrenheit", 
+    "Inventory", "is_prime", "factorial_calc", "celsius_to_fahrenheit", 
     "fibonacci", "reverse_string", "sum_of_list", "is_palindrome", "max_in_list", 
     "miles_to_kilometers", "count_vowels"
 ]

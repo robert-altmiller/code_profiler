@@ -11,12 +11,12 @@ def celsius_to_fahrenheit(celsius):
     """ Convert Celsius to Fahrenheit. """
     return (celsius * 9/5) + 32
 
-def factorial(n):
+def factorial_calc(n):
     """ Calculate the factorial of a number. """
     if n == 0:
         return 1
     else:
-        return n * factorial(n-1)
+        return n * factorial_calc(n-1)
 
 def fibonacci(n):
     """ Generate a Fibonacci sequence up to n elements. """
