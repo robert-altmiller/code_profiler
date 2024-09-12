@@ -24,9 +24,8 @@ if is_running_in_databricks() == False:
     spark = SparkSession.builder \
         .appName("CodeProfiling") \
         .getOrCreate()
-    install_requirements(requirements_file = f'{os.path.dirname(os.path.abspath(__file__))}/llm_integration/requirements.txt')
-else: # execution is in Databricks
-    install_requirements(requirements_file = f'{os.path.dirname(os.path.abspath(__file__))}/llm_integration/requirements.txt')
+# install requirements.txt file (e.g. openai)
+install_requirements(requirements_file = f'{os.path.dirname(os.path.abspath(__file__))}/llm_integration/requirements.txt')
 
 # unique identifer for python code / application name (OPTIONAL MODIFY)
 unique_app_id = "xxxxxxxxxxxxx" 
