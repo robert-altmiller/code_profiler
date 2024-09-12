@@ -1,9 +1,4 @@
 # Databricks notebook source
-# DBTITLE 1,Import the Python Code Profiler
-from code_profiler.main import *
-
-# COMMAND ----------
-
 # DBTITLE 1,Import the test_functions notebook
 # MAGIC %run ../../initialize/unit_test/test_functions_nb
 
@@ -16,36 +11,34 @@ from code_profiler.main import *
 # COMMAND ----------
 
 # DBTITLE 1,Check if running locally in Databricks and set the log_file_write_path
-if is_running_in_databricks() == True:
-    # Clear the widgets
-    dbutils.widgets.removeAll()
-else: 
+if is_running_in_databricks() == False: # running in local IDE
     from code_profiler.initialize.unit_test.test_functions_nb import *
     from code_profiler.initialize.unit_test.test_class_nb import *
 
-# Change the log_file_write_path
-log_file_write_path = "./code_profiling/code_profiler_unit_test_nb"
+# COMMAND ----------
 
+# DBTITLE 1,Decorate All the In Scope Standalone Python Functions and Class Functions
+# all custom and standard library imports need to execute first....
+from code_profiler.main import *
+
+if is_running_in_databricks() == True:
+    # Clear the widgets
+    dbutils.widgets.removeAll()
+
+# update the log_file_write_path environment variable
+log_file_write_path =  "./code_profiling/code_profiler_unit_test_nb"
 # Check if the path exists
 if os.path.exists(log_file_write_path):
     # Delete the directory and all its contents
     shutil.rmtree(log_file_write_path)
 print(log_file_write_path)
 
-# COMMAND ----------
-
-# DBTITLE 1,Apply Timer() Decorator to All Standalone Python Functions
-# Example usage: Call these functions after all imports
+# add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
 original_globals = globals()
-current_globals, function_results = apply_timer_decorator_to_all_python_functions(original_globals, log_file_path = log_file_write_path) # python standalone functions 
-print(f"\ndecorated_standalone_functions: {function_results}\n")
-
-# COMMAND ----------
-
-# DBTITLE 1,Add Timer Decorator to All Notebook Class Functions
-# Example usage: Call these functions after all imports
-current_globals, nb_class_results = apply_timer_decorator_to_all_nb_class_functions(current_globals, python_class_and_fxns_scopes_unittesting, log_file_path = log_file_write_path) # notebook class functions
-print(f"\ndecorated notebook class functions: {nb_class_results}\n")
+current_globals, function_results, nb_class_results, python_class_results = add_timer_to_all_functions(original_globals, log_file_write_path, class_scopes = python_class_and_fxns_scopes_unittesting)
+print(f"standalone decorated functions: {function_results}")
+print(f"notebook class decorated functions: {nb_class_results}")
+print(f"python file class decorated functions: {python_class_results}")
 
 # COMMAND ----------
 

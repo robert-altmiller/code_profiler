@@ -1,33 +1,30 @@
 # Library Imports
-from code_profiler.main import *
 from code_profiler.initialize.unit_test.test_functions import *
 from code_profiler.initialize.unit_test.test_class import *
 
 
+# all custom and standard library imports need to execute first....
+from code_profiler.main import *
+
 if is_running_in_databricks() == True:
     # Clear the widgets
     dbutils.widgets.removeAll()
-    
 
-# Change the log_file_write_path
+# update the log_file_write_path environment variable
 log_file_write_path = "./code_profiling/code_profiler_test_py_files_in_python_file"
-
-
 # Check if the path exists
 if os.path.exists(log_file_write_path):
     # Delete the directory and all its contents
     shutil.rmtree(log_file_write_path)
 print(log_file_write_path)
 
-
-# Example usage: Call these functions after all imports
+# add the @timer decorator to all Python functions using automation and update globals() namespace dictionary.
 original_globals = globals()
-current_globals, function_results = apply_timer_decorator_to_all_python_functions(original_globals, log_file_path = log_file_write_path) # python standalone functions 
-print(f"\ndecorated standalone functions: {function_results}\n")
+current_globals, function_results, nb_class_results, python_class_results = add_timer_to_all_functions(original_globals, log_file_write_path, class_scopes = python_class_scopes)
+print(f"standalone decorated functions: {function_results}")
+print(f"notebook class decorated functions: {nb_class_results}")
+print(f"python file class decorated functions: {python_class_results}")
 
-# Example usage: Call these functions after all imports
-current_globals, python_class_results = apply_timer_decorator_to_all_python_class_functions(current_globals, python_class_and_fxns_scopes_unittesting, log_file_path = log_file_write_path) # python class functions
-print(f"\ndecorated python class functions: {python_class_results}\n")
 
 # Class usage example:
 print("Class usage example:")
