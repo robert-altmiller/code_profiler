@@ -2,7 +2,7 @@
 
 ## Single or Multi-threaded Code Profiling Using Python Timer() Class Function Decorators and Globals() Namespace<br><br>
 
-[Tech Summit FY25 Brickthroughs Competition Submission](/code_profiler/readme_docs/Tech Summit FY25 - Brickthrough Competition.pdf)
+[Tech Summit FY25 Brickthroughs Competition Submission](/code_profiler/readme_docs/Tech%20Summit%20FY25%20-%20Brickthrough%20Competition.pdf)
 
 There are many different code profilers that exist.  Some of them are c-profile, scalene, memory_profiler, py-spy, and yappi.  
 
