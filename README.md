@@ -4,7 +4,7 @@
 
 [Tech Summit FY25 Brickthroughs Competition Submission](/code_profiler/readme_docs/Tech%20Summit%20FY25%20-%20Brickthrough%20Competition.pdf)
 
-<br><br>There are many different code profilers that exist.  Some of them are c-profile, scalene, memory_profiler, py-spy, and yappi.  
+<br>There are many different code profilers that exist.  Some of them are c-profile, scalene, memory_profiler, py-spy, and yappi.  
 
   ![other_profilers.png](/code_profiler/readme_images/other_profilers.png)
 
