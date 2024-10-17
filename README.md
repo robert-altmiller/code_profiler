@@ -2,6 +2,8 @@
 
 ## Single or Multi-threaded Code Profiling Using Python Timer() Class Function Decorators and Globals() Namespace<br><br>
 
+[Tech Summit FY25 Brickthroughs Competition Submission](/code_profiler/readme_docs/Tech Summit FY25 - Brickthrough Competition.pdf)
+
 There are many different code profilers that exist.  Some of them are c-profile, scalene, memory_profiler, py-spy, and yappi.  
 
   ![other_profilers.png](/code_profiler/readme_images/other_profilers.png)
@@ -243,3 +245,4 @@ There are many different code profilers that exist.  Some of them are c-profile,
 - 8/29/2024 - We added a folder called 'llm_integration' to be able to read the Python function code and then submit to a large language model (LLM) to get optimization recommendations.  This folder is standalone and is not integrated with the final code profiling results output Delta table.
 - 9/3/2024 - We added some code to read the profiling function code and then store it in a column named 'source_code_compressed' in the final code profiling results output Delta table.  We compress the source code using 'base64' and 'zlib' Python libraries.  There is an example of how to use a Python UDF to decode the 'source_code_compressed' column into a 'source_code_decompressed' column with the original source code.  This example can be found in the 'query_profiler_data' folder --> [query_code_profiler_results_general.py](https://github.com/robert-altmiller/code_profiler/blob/main/code_profiler/query_profiler_data/query_code_profiler_results_general.py) file.  This can then be used with any external __large language model (LLM)__ to get function level optimization recommendations.
 - 9/4/2024 - We added in a requirements.txt file which installs the 'openai' Python library for large language model (LLM) integration with Databricks model serving endpoints (e.g. DBRX).  It is all located in the '__llm_integration__' root level folder.  We also added a block of code in '__query_profiler_data__' root level folder --> '__query_code_profiler_results_general.py__ to get LLM function code optimization recommendations and an example of how to optimize the function code for the top 5 slowest running functions.
+- 1017/2024 - We added a root level '__readme_docs__' folder which has the Tech Summit FY25 Brickthroughs Competition submission which shows the value of the code profiler and how it is different from other line-bu-line profilers.
